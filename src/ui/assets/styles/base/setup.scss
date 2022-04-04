@@ -1,0 +1,19 @@
+@import "@/ui/assets/styles/abstracts";
+
+:root {
+  --surface: #fff;
+  --onSurface: #333;
+  --primary: #6200ee;
+  --background: #f6f8fa;
+  --border-radius: 0.25rem;
+
+  --active: #dceefa;
+}
+
+body {
+  color: var(--onSurface);
+  font-family: Roboto, Segoe UI, BlinkMacSystemFont, system-ui,
+    -apple-system sans-serif;
+  background-color: var(--background);
+  -webkit-font-smoothing: antialiased;
+}
