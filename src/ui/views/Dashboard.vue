@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
+
 import { useDataTableStore } from "@/store";
+import { DataTable } from "@/ui/common";
 
 const store = useDataTableStore();
 store.persistOnUnload();
@@ -15,7 +17,13 @@ const groupBy = computed(() => (isGrouped.value ? "type" : undefined));
     <label><input type="checkbox" v-model="isGrouped" /> grouped</label>
   </header>
   <main :class="$style.main">
-    hello world!
+    <data-table
+      :class="$style.cover"
+      :columns="store.columns"
+      :rows="store.shownRows"
+      @resize="store.resizeColumn"
+      @swap="store.swapColumns"
+    />
   </main>
   <footer>Footer</footer>
 </template>
