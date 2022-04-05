@@ -1,6 +1,5 @@
-export function loadRecords(
-  start: number,
-  end: number
-): any[] {
-  return [];
+import { records } from "./mocks";
+
+export function loadRecords(start: number, end: number): any[] {
+  return records;
 }

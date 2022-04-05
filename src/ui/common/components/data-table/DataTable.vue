@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { provide, ref, toRef } from "vue";
 
-import { DataTableHeader } from "./sub-components";
+import { DataTableHeader, DataTableRows } from "./sub-components";
 import { DataTableColumn, DataTableRow } from "./types";
 import { DataTableKey } from "./symbols";
 import { computed } from "@vue/reactivity";
@@ -46,6 +46,7 @@ provide(
 <template>
   <div :class="$style.grid" :style="gridStyle">
     <data-table-header />
+    <data-table-rows />
   </div>
 </template>
 

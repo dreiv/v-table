@@ -6,6 +6,5 @@ import type {
 export interface DataTableState {
   columns: DataTableColumn[];
   rows: DataTableRow[];
-  shownRows: DataTableRow[];
   total: number;
 }

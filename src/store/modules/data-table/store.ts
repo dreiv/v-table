@@ -9,13 +9,12 @@ export const useDataTableStore = defineStore("dataTableStore", {
   state: (): DataTableState => ({
     columns: storedColumns,
     rows: [],
-    shownRows: [],
     total: 0,
   }),
 
   actions: {
     fetchRows(offset: number, count: number) {
-      return loadRecords(offset, count);
+      this.rows = loadRecords(offset, count);
     },
 
     resizeColumn(key: string, diff: number) {

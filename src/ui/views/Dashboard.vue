@@ -6,6 +6,8 @@ import { DataTable } from "@/ui/common";
 
 const store = useDataTableStore();
 store.persistOnUnload();
+// TODO: use pagination
+store.fetchRows(0, 25);
 
 const isGrouped = ref(true);
 const groupBy = computed(() => (isGrouped.value ? "type" : undefined));
@@ -20,7 +22,7 @@ const groupBy = computed(() => (isGrouped.value ? "type" : undefined));
     <data-table
       :class="$style.cover"
       :columns="store.columns"
-      :rows="store.shownRows"
+      :rows="store.rows"
       @resize="store.resizeColumn"
       @swap="store.swapColumns"
     />

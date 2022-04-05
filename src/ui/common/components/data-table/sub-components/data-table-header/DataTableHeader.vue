@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { inject, ref } from "vue";
+
 import DataTableHeaderResizeHandle from "./DataTableHeaderResizeHandle.vue";
 import { DataTableKey } from "../../symbols";
 
 const context = inject(DataTableKey);
-
 const COLUMN_KEY = "column-key";
 const draggedColumn = ref();
 const targetColumn = ref();
