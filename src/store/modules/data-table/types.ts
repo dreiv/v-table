@@ -1,7 +1,7 @@
 import type {
   DataTableColumn,
   DataTableRow,
-} from "@/ui/common/components/DataTable";
+} from "@/ui/common/components/data-table";
 
 export interface DataTableState {
   columns: DataTableColumn[];

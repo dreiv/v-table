@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { provide, ref, toRef } from "vue";
 
+import { DataTableHeader } from "./sub-components";
 import { DataTableColumn, DataTableRow } from "./types";
 import { DataTableKey } from "./symbols";
 
@@ -41,7 +42,9 @@ provide(
 </script>
 
 <template>
-  <div :class="$style.grid"></div>
+  <div :class="$style.grid">
+    <data-table-header />
+  </div>
 </template>
 
 <style lang="scss" module>
