@@ -4,6 +4,7 @@ import { provide, ref, toRef } from "vue";
 import { DataTableHeader } from "./sub-components";
 import { DataTableColumn, DataTableRow } from "./types";
 import { DataTableKey } from "./symbols";
+import { computed } from "@vue/reactivity";
 
 const props = defineProps<{
   columns: DataTableColumn[];
@@ -16,18 +17,19 @@ const emit = defineEmits<{
   (e: "swap", from: string, to: string): void;
 }>();
 
-const tableWidth = ref(
-  props.columns.reduce((acc, { config: { width } }) => acc + width, 0)
-);
-
 function onResize(key: string, diff: number) {
-  tableWidth.value += diff;
   emit("resize", key, diff);
 }
 
 function onSwap(from: string, to: string) {
   emit("swap", from, to);
 }
+
+const gridStyle = computed(() => ({
+  gridTemplateColumns: props.columns
+    .map(({ config: { width } }) => `${width}px`)
+    .join(" "),
+}));
 
 provide(
   DataTableKey,
@@ -42,7 +44,7 @@ provide(
 </script>
 
 <template>
-  <div :class="$style.grid">
+  <div :class="$style.grid" :style="gridStyle">
     <data-table-header />
   </div>
 </template>
@@ -50,5 +52,6 @@ provide(
 <style lang="scss" module>
 .grid {
   display: grid;
+  overflow: auto;
 }
 </style>
