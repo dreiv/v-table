@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { inject, ref } from "vue";
+import DataTableHeaderResizeHandle from "./DataTableHeaderResizeHandle.vue";
 import { DataTableKey } from "../../symbols";
 
 const context = inject(DataTableKey);
@@ -22,7 +23,7 @@ function onDrop(evt: DragEvent, to: string) {
 
 <template>
   <div
-    v-for="{ key, text } in context?.columns"
+    v-for="{ key, text, resizable, config: { width } } in context?.columns"
     :key="key"
     :class="[
       { [$style.isDragged]: key === draggedColumn },
@@ -42,6 +43,11 @@ function onDrop(evt: DragEvent, to: string) {
       {{ text }}
     </div>
     <div>↕</div>
+    <data-table-header-resize-handle
+      v-if="resizable"
+      :column-key="key"
+      :width="width"
+    />
   </div>
 </template>
 
@@ -49,6 +55,7 @@ function onDrop(evt: DragEvent, to: string) {
 @import "@/ui/assets/styles/abstracts";
 
 .header {
+  height: 36px;
   display: flex;
   gap: 8px;
 }

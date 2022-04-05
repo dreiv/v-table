@@ -7,6 +7,7 @@ export interface DataTableColumn {
   key: string;
   text: string;
   config: UserConfig;
+  resizable: boolean;
 }
 
 export interface DataTableRow {

@@ -1,4 +1,4 @@
-import type { DataTableColumn } from "./types";
+import { DataTableColumn } from "@/ui/common";
 
 export const defaultColumns: DataTableColumn[] = [
   {
@@ -8,6 +8,7 @@ export const defaultColumns: DataTableColumn[] = [
       width: 140,
       index: 0,
     },
+    resizable: true,
   },
   {
     key: "contact",
@@ -16,6 +17,7 @@ export const defaultColumns: DataTableColumn[] = [
       width: 120,
       index: 1,
     },
+    resizable: true,
   },
   {
     key: "email",
@@ -24,6 +26,7 @@ export const defaultColumns: DataTableColumn[] = [
       width: 256,
       index: 2,
     },
+    resizable: true,
   },
   {
     key: "phone",
@@ -32,6 +35,7 @@ export const defaultColumns: DataTableColumn[] = [
       width: 96,
       index: 3,
     },
+    resizable: true,
   },
   {
     key: "country",
@@ -40,6 +44,7 @@ export const defaultColumns: DataTableColumn[] = [
       width: 140,
       index: 4,
     },
+    resizable: true,
   },
   {
     key: "city",
@@ -48,6 +53,7 @@ export const defaultColumns: DataTableColumn[] = [
       width: 148,
       index: 5,
     },
+    resizable: true,
   },
   {
     key: "street",
@@ -56,5 +62,6 @@ export const defaultColumns: DataTableColumn[] = [
       width: 96,
       index: 6,
     },
+    resizable: true,
   },
 ];
