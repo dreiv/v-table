@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { provide, ref, toRef } from "vue";
+import { provide, ref, toRef, computed } from "vue";
 
 import { DataTableHeader, DataTableRows } from "./sub-components";
 import { DataTableColumn, DataTableRow } from "./types";
 import { DataTableKey } from "./symbols";
-import { computed } from "@vue/reactivity";
 
 const props = defineProps<{
   columns: DataTableColumn[];
@@ -16,14 +15,6 @@ const emit = defineEmits<{
   (e: "resize", key: string, diff: number): void;
   (e: "swap", from: string, to: string): void;
 }>();
-
-function onResize(key: string, diff: number) {
-  emit("resize", key, diff);
-}
-
-function onSwap(from: string, to: string) {
-  emit("swap", from, to);
-}
 
 const gridStyle = computed(() => ({
   gridTemplateColumns: props.columns
@@ -37,8 +28,12 @@ provide(
     columns: toRef(props, "columns"),
     rows: toRef(props, "rows"),
     groupBy: toRef(props, "groupBy"),
-    onResize,
-    onSwap,
+    onResize: (key: string, diff: number) => {
+      emit("resize", key, diff);
+    },
+    onSwap: (from: string, to: string) => {
+      emit("swap", from, to);
+    },
   })
 );
 </script>

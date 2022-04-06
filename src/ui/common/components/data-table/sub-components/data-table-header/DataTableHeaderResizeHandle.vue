@@ -7,7 +7,7 @@ const context = inject(DataTableKey);
 const props = defineProps<{ columnKey: string; width: number }>();
 
 const handle = ref<HTMLDivElement>();
-const isActive = ref(false);
+const isMoving = ref(false);
 let diff = 0;
 
 const moveHandle = requestAnimationFrame(
@@ -26,7 +26,7 @@ function startResize({ buttons }: MouseEvent) {
   if (buttons !== 1) return; // only consider left click
   const controller = new AbortController();
   const offset = Math.round(handle.value?.getBoundingClientRect().x || 0);
-  isActive.value = true;
+  isMoving.value = true;
 
   document.addEventListener(
     "mousemove",
@@ -47,7 +47,7 @@ function startResize({ buttons }: MouseEvent) {
 
       // cleanup
       handle.value!.style.removeProperty("transform");
-      isActive.value = false;
+      isMoving.value = false;
       controller.abort();
     },
     { signal: controller.signal }
@@ -58,7 +58,7 @@ function startResize({ buttons }: MouseEvent) {
 <template>
   <div
     ref="handle"
-    :class="[{ [$style.active]: isActive }, $style.handle]"
+    :class="[{ [$style.moving]: isMoving }, $style.handle]"
     @mousedown="startResize"
   />
 </template>
@@ -84,7 +84,7 @@ $viewportHeight: 100vh;
     margin-top: -$viewportHeight;
   }
 
-  &.active,
+  &.moving,
   &:hover {
     &::after {
       display: block;

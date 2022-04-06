@@ -9,12 +9,12 @@ const COLUMN_KEY = "column-key";
 const draggedColumn = ref();
 const targetColumn = ref();
 
-function startDrag(evt: DragEvent, from: string) {
-  evt.dataTransfer?.setData(COLUMN_KEY, (draggedColumn.value = from));
+function startDrag({ dataTransfer }: DragEvent, from: string) {
+  dataTransfer?.setData(COLUMN_KEY, (draggedColumn.value = from));
 }
 
-function onDrop(evt: DragEvent, to: string) {
-  const from = evt.dataTransfer?.getData(COLUMN_KEY)!;
+function onDrop({ dataTransfer }: DragEvent, to: string) {
+  const from = dataTransfer?.getData(COLUMN_KEY)!;
   if (to === from) return;
 
   context?.value.onSwap(from, to);
@@ -22,32 +22,34 @@ function onDrop(evt: DragEvent, to: string) {
 </script>
 
 <template>
-  <div
-    v-for="{ key, text, resizable, config: { width } } in context?.columns"
-    :key="key"
-    :class="[
-      { [$style.isDragged]: key === draggedColumn },
-      { [$style.isDropTarget]: key === targetColumn },
-      $style.header,
-    ]"
-    @drop="onDrop($event, key)"
-    @dragover.prevent="targetColumn = key"
-    @dragleave="targetColumn = null"
-  >
+  <div :class="$style.header">
     <div
-      :class="$style.title"
-      draggable="true"
-      @dragstart="startDrag($event, key)"
-      @dragend="draggedColumn = targetColumn = null"
+      v-for="{ key, text, resizable, config: { width } } in context?.columns"
+      :key="key"
+      :class="[
+        { [$style.isDragged]: key === draggedColumn },
+        { [$style.isDropTarget]: key === targetColumn },
+        $style.column,
+      ]"
+      @drop="onDrop($event, key)"
+      @dragover.prevent="targetColumn = key"
+      @dragleave="targetColumn = null"
     >
-      {{ text }}
+      <div
+        :class="$style.title"
+        draggable="true"
+        @dragstart="startDrag($event, key)"
+        @dragend="draggedColumn = targetColumn = null"
+      >
+        {{ text }}
+      </div>
+      <div>↕</div>
+      <data-table-header-resize-handle
+        v-if="resizable"
+        :column-key="key"
+        :width="width"
+      />
     </div>
-    <div>↕</div>
-    <data-table-header-resize-handle
-      v-if="resizable"
-      :column-key="key"
-      :width="width"
-    />
   </div>
 </template>
 
@@ -55,13 +57,19 @@ function onDrop(evt: DragEvent, to: string) {
 @import "@/ui/assets/styles/abstracts";
 
 .header {
-  height: 36px;
-  display: flex;
-  gap: 8px;
-
   position: sticky;
   top: 0;
   background-color: var(--surface);
+  height: 36px;
+
+  display: grid;
+  grid-template-columns: inherit;
+  grid-column: 1 / -1;
+}
+
+.column {
+  display: flex;
+  gap: 8px;
 }
 
 .title {
