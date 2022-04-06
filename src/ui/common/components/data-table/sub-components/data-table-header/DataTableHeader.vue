@@ -58,6 +58,10 @@ function onDrop(evt: DragEvent, to: string) {
   height: 36px;
   display: flex;
   gap: 8px;
+
+  position: sticky;
+  top: 0;
+  background-color: var(--surface);
 }
 
 .title {
