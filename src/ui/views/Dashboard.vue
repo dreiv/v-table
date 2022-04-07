@@ -2,7 +2,7 @@
 import { ref, computed } from "vue";
 
 import { useDataTableStore } from "@/store";
-import { DataTable } from "@/ui/common";
+import { DataTable, Pagination } from "@/ui/common";
 
 const store = useDataTableStore();
 store.persistOnUnload();
@@ -27,7 +27,9 @@ const groupBy = computed(() => (isGrouped.value ? "type" : undefined));
       @swap="store.swapColumns"
     />
   </main>
-  <footer>Footer</footer>
+  <footer>
+    <pagination />
+  </footer>
 </template>
 
 <style lang="scss" module>
