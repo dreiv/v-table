@@ -1,5 +1,8 @@
 import { records } from "./mocks";
 
-export function loadRecords(start: number, end: number): any[] {
-  return records;
+export function loadRecords(start: number, count: number): any {
+  return {
+    records: records.slice(start, start + count),
+    total: records.length
+  }
 }

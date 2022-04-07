@@ -5,6 +5,9 @@ import type {
 
 export interface DataTableState {
   columns: DataTableColumn[];
+  rowsPerPage: number;
   rows: DataTableRow[];
-  total: number;
+  totalRows: number;
+  page: number;
+  totalPages: number;
 }

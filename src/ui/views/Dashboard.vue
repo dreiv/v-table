@@ -6,8 +6,6 @@ import { DataTable, Pagination } from "@/ui/common";
 
 const store = useDataTableStore();
 store.persistOnUnload();
-// TODO: use pagination
-store.fetchRows(0, 25);
 
 const isGrouped = ref(true);
 const groupBy = computed(() => (isGrouped.value ? "type" : undefined));
@@ -28,7 +26,12 @@ const groupBy = computed(() => (isGrouped.value ? "type" : undefined));
     />
   </main>
   <footer>
-    <pagination />
+    <pagination
+      :page="store.page"
+      :total-pages="store.totalPages"
+      v-model:docs-per-page="store.rowsPerPage"
+      @go-to="store.fetchPage"
+    />
   </footer>
 </template>
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 
 const props = defineProps({
   page: {
@@ -17,17 +17,30 @@ const props = defineProps({
 });
 const emit = defineEmits<{
   (e: "goTo", page: number): void;
-  (e: "docsPerPage", docsPerPage: number): void;
+  (e: "update:docsPerPage", docsPerPage: number): void;
 }>();
 
 const isPrevDisabled = computed(() => props.page === 0);
 const isNextDisabled = computed(() => props.page === props.totalPages);
+const docsPerPageModel = computed<number>({
+  get(): number {
+    return props.docsPerPage;
+  },
+  set(value: number): void {
+    emit("update:docsPerPage", +value);
+    emit("goTo", 0);
+  },
+});
 
-function onPageChange({ target: value }: any) {
+function onPageChange({ target: { value } }: any) {
   if (value < 0 || value > props.totalPages) return;
 
-  emit("goTo", value);
+  emit("goTo", +value);
 }
+
+onMounted(() => {
+  emit("goTo", 0);
+});
 </script>
 
 <template>
@@ -35,14 +48,15 @@ function onPageChange({ target: value }: any) {
     prev
   </button>
   <label
-    ><input type="number" @change="onPageChange" :value="page" /> of 3
+    ><input type="number" @change="onPageChange" :value="page" /> of
+    {{ totalPages }}
   </label>
   <button :disabled="isNextDisabled" @click="emit('goTo', page + 1)">
     next
   </button>
 
   Documents per page
-  <select>
+  <select v-model="docsPerPageModel">
     <option v-for="option in [25, 50, 100]">{{ option }}</option>
   </select>
 </template>

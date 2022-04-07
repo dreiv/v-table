@@ -8,13 +8,24 @@ import type { DataTableState } from "./types";
 export const useDataTableStore = defineStore("dataTableStore", {
   state: (): DataTableState => ({
     columns: storedColumns,
+    rowsPerPage: 25,
     rows: [],
-    total: 0,
+    totalRows: 0,
+    page: 0,
+    totalPages: 0,
   }),
 
   actions: {
-    fetchRows(offset: number, count: number) {
-      this.rows = loadRecords(offset, count);
+    fetchPage(page: number) {
+      const { records, total } = loadRecords(
+        page * this.rowsPerPage,
+        this.rowsPerPage
+      );
+
+      this.page = page;
+      this.totalPages = Math.ceil(total / this.rowsPerPage)
+      this.rows = records;
+      this.totalRows = total;
     },
 
     resizeColumn(key: string, diff: number) {
