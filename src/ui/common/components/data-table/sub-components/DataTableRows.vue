@@ -28,7 +28,12 @@ const context = inject(DataTableKey);
 </template>
 
 <style lang="scss" module>
+@import "../variables";
 .groupHeader {
+  height: 40px;
+  position: sticky;
+  top: $headerSize;
+
   grid-column: 1 / -1;
   background-color: lightgoldenrodyellow;
 }

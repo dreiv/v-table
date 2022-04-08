@@ -55,12 +55,13 @@ function onDrop({ dataTransfer }: DragEvent, to: string) {
 
 <style lang="scss" module>
 @import "@/ui/assets/styles/abstracts";
+@import "../../variables";
 
 .header {
   position: sticky;
   top: 0;
   background-color: var(--surface);
-  height: 36px;
+  height: $headerSize;
 
   display: grid;
   grid-template-columns: inherit;
