@@ -21,6 +21,7 @@ const groupBy = computed(() => (isGrouped.value ? "type" : undefined));
       :class="$style.cover"
       :columns="store.columns"
       :rows="store.rows"
+      :sortBy="store.sortBy"
       :groupBy="groupBy"
       @resize="store.resizeColumn"
       @swap="store.swapColumns"

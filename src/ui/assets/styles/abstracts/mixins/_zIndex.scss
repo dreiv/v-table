@@ -1,10 +1,8 @@
 $z-indices: (
-    "menu": (
-        "items": 2,
-        "social": 3,
+    "datatable": (
+        "header": 1,
     ),
-    "main-content": 1,
-    "footer": -1,
+    "main-content": 1
 );
 
 @function ind($element, $sub-element: false){

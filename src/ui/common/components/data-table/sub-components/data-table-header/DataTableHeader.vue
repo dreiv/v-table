@@ -58,6 +58,7 @@ function onDrop({ dataTransfer }: DragEvent, to: string) {
 @import "../../variables";
 
 .header {
+  z-index: ind("datatable", "header");
   position: sticky;
   top: 0;
   background-color: var(--surface);

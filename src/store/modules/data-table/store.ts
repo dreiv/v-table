@@ -13,6 +13,7 @@ export const useDataTableStore = defineStore("dataTableStore", {
     totalRows: 0,
     page: 1,
     totalPages: 0,
+    sortBy: "",
   }),
 
   actions: {
@@ -23,7 +24,7 @@ export const useDataTableStore = defineStore("dataTableStore", {
       );
 
       this.page = page;
-      this.totalPages = Math.ceil(total / this.rowsPerPage)
+      this.totalPages = Math.ceil(total / this.rowsPerPage);
       this.rows = records;
       this.totalRows = total;
     },
