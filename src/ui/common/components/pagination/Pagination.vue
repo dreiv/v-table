@@ -16,11 +16,11 @@ const props = defineProps({
   },
 });
 const emit = defineEmits<{
-  (e: "goTo", page: number): void;
+  (e: "goToPage", page: number): void;
   (e: "update:docsPerPage", docsPerPage: number): void;
 }>();
 
-const isPrevDisabled = computed(() => props.page === 0);
+const isPrevDisabled = computed(() => props.page === 1);
 const isNextDisabled = computed(() => props.page === props.totalPages);
 const docsPerPageModel = computed<number>({
   get(): number {
@@ -28,30 +28,30 @@ const docsPerPageModel = computed<number>({
   },
   set(value: number): void {
     emit("update:docsPerPage", +value);
-    emit("goTo", 0);
+    emit("goToPage", 1);
   },
 });
 
 function onPageChange({ target: { value } }: any) {
-  if (value < 0 || value > props.totalPages) return;
+  if (value < 1 || value > props.totalPages) return;
 
-  emit("goTo", +value);
+  emit("goToPage", +value);
 }
 
 onMounted(() => {
-  emit("goTo", 0);
+  emit("goToPage", 1);
 });
 </script>
 
 <template>
-  <button :disabled="isPrevDisabled" @click="emit('goTo', page - 1)">
+  <button :disabled="isPrevDisabled" @click="emit('goToPage', page - 1)">
     prev
   </button>
   <label
     ><input type="number" @change="onPageChange" :value="page" /> of
     {{ totalPages }}
   </label>
-  <button :disabled="isNextDisabled" @click="emit('goTo', page + 1)">
+  <button :disabled="isNextDisabled" @click="emit('goToPage', page + 1)">
     next
   </button>
 

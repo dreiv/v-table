@@ -11,14 +11,14 @@ export const useDataTableStore = defineStore("dataTableStore", {
     rowsPerPage: 25,
     rows: [],
     totalRows: 0,
-    page: 0,
+    page: 1,
     totalPages: 0,
   }),
 
   actions: {
     fetchPage(page: number) {
       const { records, total } = loadRecords(
-        page * this.rowsPerPage,
+        (page - 1) * this.rowsPerPage,
         this.rowsPerPage
       );
 

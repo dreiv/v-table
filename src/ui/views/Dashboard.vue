@@ -31,7 +31,7 @@ const groupBy = computed(() => (isGrouped.value ? "type" : undefined));
       :page="store.page"
       :total-pages="store.totalPages"
       v-model:docs-per-page="store.rowsPerPage"
-      @go-to="store.fetchPage"
+      @go-to-page="store.fetchPage"
     />
   </footer>
 </template>
