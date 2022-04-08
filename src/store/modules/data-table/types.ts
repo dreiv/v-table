@@ -6,9 +6,9 @@ import type {
 
 export interface DataTableState {
   columns: DataTableColumn[];
-  rowsPerPage: number;
   rows: DataTableRow[];
   totalRows: number;
+  rowsPerPage: number;
   page: number;
   totalPages: number;
   sortBy: string;

@@ -7,6 +7,7 @@ export interface DataTableContext {
   groupBy: string;
   onResize: (key: string, diff: number) => void;
   onSwap: (from: string, to: string) => void;
+  onSortBy: (key: string) => void;
 }
 
 export const DataTableKey: InjectionKey<Ref<DataTableContext>> = Symbol(

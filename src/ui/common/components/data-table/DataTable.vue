@@ -9,9 +9,11 @@ const props = defineProps<{
   columns: DataTableColumn[];
   rows: DataTableRow[];
   groupBy?: string;
+  sortBy?: string;
 }>();
 
 const emit = defineEmits<{
+  (e: "sortBy", key: string): void;
   (e: "resize", key: string, diff: number): void;
   (e: "swap", from: string, to: string): void;
 }>();
@@ -28,6 +30,9 @@ provide(
     columns: toRef(props, "columns"),
     rows: toRef(props, "rows"),
     groupBy: toRef(props, "groupBy"),
+    onSortBy: (key: string) => {
+      emit("sortBy", key);
+    },
     onResize: (key: string, diff: number) => {
       emit("resize", key, diff);
     },

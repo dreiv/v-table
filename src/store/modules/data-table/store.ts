@@ -8,9 +8,9 @@ import type { DataTableState } from "./types";
 export const useDataTableStore = defineStore("dataTableStore", {
   state: (): DataTableState => ({
     columns: storedColumns,
-    rowsPerPage: 25,
     rows: [],
     totalRows: 0,
+    rowsPerPage: 25,
     page: 1,
     totalPages: 0,
     sortBy: "",
