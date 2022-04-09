@@ -9,6 +9,7 @@ export const defaultColumns: DataTableColumn[] = [
       index: 0,
     },
     resizable: true,
+    sortable: true,
   },
   {
     key: "contact",
@@ -18,6 +19,7 @@ export const defaultColumns: DataTableColumn[] = [
       index: 1,
     },
     resizable: true,
+    sortable: true,
   },
   {
     key: "email",
@@ -36,6 +38,7 @@ export const defaultColumns: DataTableColumn[] = [
       index: 3,
     },
     resizable: true,
+    sortable: true,
   },
   {
     key: "country",

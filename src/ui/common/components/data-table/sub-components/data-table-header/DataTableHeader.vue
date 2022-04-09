@@ -2,6 +2,7 @@
 import { inject, ref } from "vue";
 
 import DataTableHeaderResizeHandle from "./DataTableHeaderResizeHandle.vue";
+import DataTableHeaderSort from "./DataTableHeaderSort.vue";
 import { DataTableKey } from "../../symbols";
 
 const context = inject(DataTableKey);
@@ -24,7 +25,13 @@ function onDrop({ dataTransfer }: DragEvent, to: string) {
 <template>
   <div :class="$style.header">
     <div
-      v-for="{ key, text, resizable, config: { width } } in context?.columns"
+      v-for="{
+        key,
+        text,
+        resizable,
+        sortable,
+        config: { width },
+      } in context?.columns"
       :key="key"
       :class="[
         { [$style.isDragged]: key === draggedColumn },
@@ -43,7 +50,7 @@ function onDrop({ dataTransfer }: DragEvent, to: string) {
       >
         {{ text }}
       </div>
-      <div>↕</div>
+      <data-table-header-sort v-if="sortable" :column-key="key" />
       <data-table-header-resize-handle
         v-if="resizable"
         :column-key="key"

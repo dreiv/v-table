@@ -7,10 +7,13 @@ export interface DataTableColumn {
   key: string;
   text: string;
   config: UserConfig;
-  resizable: boolean;
+  resizable?: boolean;
+  sortable?: boolean;
 }
 
 export interface DataTableRow {
   id: string;
   [key: string]: any;
 }
+
+export type SortDirection = "up" | "down" | undefined;

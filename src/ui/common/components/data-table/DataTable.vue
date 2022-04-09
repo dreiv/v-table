@@ -2,7 +2,7 @@
 import { provide, ref, toRef, computed } from "vue";
 
 import { DataTableHeader, DataTableRows } from "./sub-components";
-import { DataTableColumn, DataTableRow } from "./types";
+import { DataTableColumn, DataTableRow, SortDirection } from "./types";
 import { DataTableKey } from "./symbols";
 
 const props = defineProps<{
@@ -10,10 +10,11 @@ const props = defineProps<{
   rows: DataTableRow[];
   groupBy?: string;
   sortBy?: string;
+  sortDirection?: SortDirection;
 }>();
 
 const emit = defineEmits<{
-  (e: "sortBy", key: string): void;
+  (e: "sort", key: string, direction: SortDirection): void;
   (e: "resize", key: string, diff: number): void;
   (e: "swap", from: string, to: string): void;
 }>();
@@ -30,8 +31,10 @@ provide(
     columns: toRef(props, "columns"),
     rows: toRef(props, "rows"),
     groupBy: toRef(props, "groupBy"),
-    onSortBy: (key: string) => {
-      emit("sortBy", key);
+    sortBy: toRef(props, "sortBy"),
+    sortDirection: toRef(props, "sortDirection"),
+    onSort: (key: string, direction: SortDirection) => {
+      emit("sort", key, direction);
     },
     onResize: (key: string, diff: number) => {
       emit("resize", key, diff);

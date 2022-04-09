@@ -1,6 +1,7 @@
 import type {
   DataTableColumn,
   DataTableRow,
+  SortDirection,
   UserConfig,
 } from "@/ui/common/components/data-table";
 
@@ -12,6 +13,7 @@ export interface DataTableState {
   page: number;
   totalPages: number;
   sortBy: string;
+  sortDirection: SortDirection
 }
 
 export interface SavedConfig {

@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 
 import { setItem } from "@/helpers";
 import { loadRecords } from "@/services";
+import { SortDirection } from "@/ui/common";
 import { USER_CONFIG, storedColumns } from "./storedColumns";
 import type { DataTableState } from "./types";
 
@@ -14,6 +15,7 @@ export const useDataTableStore = defineStore("dataTableStore", {
     page: 1,
     totalPages: 0,
     sortBy: "",
+    sortDirection: undefined,
   }),
 
   actions: {
@@ -44,6 +46,11 @@ export const useDataTableStore = defineStore("dataTableStore", {
 
       [fromCfg.index, toCfg.index] = [toCfg.index, fromCfg.index];
       this.columns = cols.sort((a, b) => a.config!.index - b.config!.index);
+    },
+
+    sort(key: string, direction: SortDirection) {
+      this.sortDirection = direction;
+      this.sortBy = key;
     },
 
     persistOnUnload() {

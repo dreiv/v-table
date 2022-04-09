@@ -21,10 +21,12 @@ const groupBy = computed(() => (isGrouped.value ? "type" : undefined));
       :class="$style.cover"
       :columns="store.columns"
       :rows="store.rows"
-      :sortBy="store.sortBy"
-      :groupBy="groupBy"
+      :group-by="groupBy"
+      :sort-by="store.sortBy"
+      :sort-direction="store.sortDirection"
       @resize="store.resizeColumn"
       @swap="store.swapColumns"
+      @sort="store.sort"
     />
   </main>
   <footer>
