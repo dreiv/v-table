@@ -9,9 +9,10 @@ export interface DataTableState {
   columns: DataTableColumn[];
   rows: DataTableRow[];
   totalRows: number;
-  rowsPerPage: number;
+  pageSize: number;
   page: number;
   totalPages: number;
+  groupBy: string;
   sortBy: string;
   sortDirection: SortDirection
 }

@@ -11,22 +11,24 @@ export const useDataTableStore = defineStore("dataTableStore", {
     columns: storedColumns,
     rows: [],
     totalRows: 0,
-    rowsPerPage: 25,
+    pageSize: 25,
     page: 1,
     totalPages: 0,
+    groupBy: "type",
     sortBy: "",
     sortDirection: undefined,
   }),
 
   actions: {
     fetchPage(page: number) {
-      const { records, total } = loadRecords(
-        (page - 1) * this.rowsPerPage,
-        this.rowsPerPage
-      );
+      const { records, total } = loadRecords(page, this.pageSize, {
+        sortBy: this.sortBy,
+        sortDirection: this.sortDirection,
+        groupBy: this.groupBy,
+      });
 
       this.page = page;
-      this.totalPages = Math.ceil(total / this.rowsPerPage);
+      this.totalPages = Math.ceil(total / this.pageSize);
       this.rows = records;
       this.totalRows = total;
     },
@@ -45,12 +47,14 @@ export const useDataTableStore = defineStore("dataTableStore", {
       const toCfg = cols.find(({ key }) => key === to)!.config;
 
       [fromCfg.index, toCfg.index] = [toCfg.index, fromCfg.index];
-      this.columns = cols.sort((a, b) => a.config!.index - b.config!.index);
+      this.columns = cols.sort((a, z) => a.config!.index - z.config!.index);
     },
 
     sort(key: string, direction: SortDirection) {
       this.sortDirection = direction;
       this.sortBy = key;
+
+      this.fetchPage(this.page);
     },
 
     persistOnUnload() {

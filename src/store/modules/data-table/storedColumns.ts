@@ -13,5 +13,5 @@ export const storedColumns = storedConfig
         ...col,
         config: storedConfig.find(({ key }) => key === col.key)?.config,
       }))
-      .sort((a, b) => a.config!.index - b.config!.index) as DataTableColumn[])
+      .sort((a, z) => a.config!.index - z.config!.index) as DataTableColumn[])
   : defaultColumns;

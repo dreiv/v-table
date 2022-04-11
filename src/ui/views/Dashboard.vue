@@ -7,8 +7,14 @@ import { DataTable, Pagination } from "@/ui/common";
 const store = useDataTableStore();
 store.persistOnUnload();
 
-const isGrouped = ref(true);
-const groupBy = computed(() => (isGrouped.value ? "type" : undefined));
+const isGrouped = computed<boolean>({
+  get(): boolean {
+    return !!store.groupBy;
+  },
+  set(isGrouped: boolean): void {
+    store.groupBy = isGrouped ? "type" : "";
+  },
+});
 </script>
 
 <template>
@@ -21,7 +27,7 @@ const groupBy = computed(() => (isGrouped.value ? "type" : undefined));
       :class="$style.cover"
       :columns="store.columns"
       :rows="store.rows"
-      :group-by="groupBy"
+      :group-by="store.groupBy"
       :sort-by="store.sortBy"
       :sort-direction="store.sortDirection"
       @resize="store.resizeColumn"
@@ -33,7 +39,7 @@ const groupBy = computed(() => (isGrouped.value ? "type" : undefined));
     <pagination
       :page="store.page"
       :total-pages="store.totalPages"
-      v-model:docs-per-page="store.rowsPerPage"
+      v-model:page-size="store.pageSize"
       @go-to-page="store.fetchPage"
     />
   </footer>

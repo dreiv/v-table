@@ -1,14 +1,25 @@
 import { records } from "./mocks";
+import { sortByDirection, groupRecords } from "./helpers";
 
-const collator = new Intl.Collator("en", {
-  numeric: true,
-  sensitivity: "base",
-});
-const sorted = records.sort((a, z) => collator.compare(a.type, z.type));
+export function loadRecords(
+  page: number,
+  pageSize: number,
+  { sortBy, sortDirection, groupBy }: any = {}
+): any {
+  const offset = (page - 1) * pageSize;
 
-export function loadRecords(start: number, count: number): any {
+  let res = records;
+
+  if (sortBy) {
+    res.sort(sortByDirection(sortDirection, sortBy));
+  }
+
+  if (groupBy) {
+    res = groupRecords(records, groupBy);
+  }
+
   return {
-    records: sorted.slice(start, start + count),
-    total: sorted.length,
+    records: res.slice(offset, offset + pageSize),
+    total: res.length,
   };
 }
