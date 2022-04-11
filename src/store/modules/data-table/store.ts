@@ -6,6 +6,7 @@ import { SortDirection } from "@/ui/common";
 import { USER_CONFIG, storedColumns } from "./storedColumns";
 import type { DataTableState } from "./types";
 
+let controller: AbortController;
 export const useDataTableStore = defineStore("dataTableStore", {
   state: (): DataTableState => ({
     columns: storedColumns,
@@ -20,11 +21,15 @@ export const useDataTableStore = defineStore("dataTableStore", {
   }),
 
   actions: {
-    fetchPage(page: number) {
-      const { records, total } = loadRecords(page, this.pageSize, {
+    async fetchPage(page: number) {
+      if (controller) controller.abort();
+      controller = new AbortController();
+
+      const { records, total } = await loadRecords(page, this.pageSize, {
         sortBy: this.sortBy,
         sortDirection: this.sortDirection,
         groupBy: this.groupBy,
+        signal: controller.signal
       });
 
       this.page = page;

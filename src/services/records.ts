@@ -4,22 +4,36 @@ import { sortByDirection, groupRecords } from "./helpers";
 export function loadRecords(
   page: number,
   pageSize: number,
-  { sortBy, sortDirection, groupBy }: any = {}
+  { sortBy, sortDirection, groupBy, signal }: any = {}
 ): any {
-  const offset = (page - 1) * pageSize;
-
-  let res = records;
-
-  if (sortBy) {
-    res.sort(sortByDirection(sortDirection, sortBy));
+  if (signal?.aborted) {
+    return Promise.reject(new DOMException("Aborted", "AbortError"));
   }
 
-  if (groupBy) {
-    res = groupRecords(records, groupBy);
-  }
+  return new Promise((resolve, reject) => {
+    const offset = (page - 1) * pageSize;
+    let res = records;
 
-  return {
-    records: res.slice(offset, offset + pageSize),
-    total: res.length,
-  };
+    if (sortBy) {
+      res.sort(sortByDirection(sortDirection, sortBy));
+    }
+
+    if (groupBy) {
+      res = groupRecords(records, groupBy);
+    }
+
+    const data = {
+      records: res.slice(offset, offset + pageSize),
+      total: res.length,
+    };
+
+    const timeout = setTimeout(() => resolve(data), Math.random() * 500 + 300);
+    if (signal) {
+      signal.addEventListener("abort", () => {
+        clearTimeout(timeout);
+
+        reject(new DOMException("Aborted", "AbortError"));
+      });
+    }
+  });
 }
