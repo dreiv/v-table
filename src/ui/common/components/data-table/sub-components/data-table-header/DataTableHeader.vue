@@ -78,7 +78,6 @@ function onDrop({ dataTransfer }: DragEvent, to: string) {
 
 .column {
   display: flex;
-  gap: 8px;
 }
 
 .title {

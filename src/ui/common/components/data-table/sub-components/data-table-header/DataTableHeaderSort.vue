@@ -33,6 +33,9 @@ function onSort() {
 .sort {
   border: none;
   background-color: transparent;
+  width: 36px;
+
+  cursor: pointer;
 }
 
 .focused {
