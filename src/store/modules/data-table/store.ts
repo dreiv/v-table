@@ -18,24 +18,34 @@ export const useDataTableStore = defineStore("dataTableStore", {
     groupBy: "type",
     sortBy: "",
     sortDirection: undefined,
+    status: "loading",
   }),
 
   actions: {
     async fetchPage(page: number) {
       if (controller) controller.abort();
       controller = new AbortController();
+      this.status = "loading";
 
-      const { records, total } = await loadRecords(page, this.pageSize, {
-        sortBy: this.sortBy,
-        sortDirection: this.sortDirection,
-        groupBy: this.groupBy,
-        signal: controller.signal
-      });
+      try {
+        const { records, total } = await loadRecords(page, this.pageSize, {
+          sortBy: this.sortBy,
+          sortDirection: this.sortDirection,
+          groupBy: this.groupBy,
+          signal: controller.signal,
+        });
 
-      this.page = page;
-      this.totalPages = Math.ceil(total / this.pageSize);
-      this.rows = records;
-      this.totalRows = total;
+        this.page = page;
+        this.totalPages = Math.ceil(total / this.pageSize);
+        this.rows = records;
+        this.totalRows = total;
+
+        this.status = records.length ? "success" : "empty";
+      } catch (exception: any) {
+        if (!exception.includes("Aborted")) {
+          this.status = "error";
+        }
+      }
     },
 
     resizeColumn(key: string, diff: number) {

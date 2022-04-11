@@ -14,10 +14,13 @@ export interface DataTableState {
   totalPages: number;
   groupBy: string;
   sortBy: string;
-  sortDirection: SortDirection
+  sortDirection: SortDirection;
+  status: DatatableStatus;
 }
 
 export interface SavedConfig {
   key: string;
   config: UserConfig;
 }
+
+export type DatatableStatus = "loading" | "empty" | "error" | "success";
