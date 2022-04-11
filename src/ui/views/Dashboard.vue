@@ -39,7 +39,7 @@ const isGrouped = computed<boolean>({
     <pagination
       :page="store.page"
       :total-pages="store.totalPages"
-      v-model:page-size="store.pageSize"
+      v-model:docs-per-page="store.pageSize"
       @go-to-page="store.fetchPage"
     />
   </footer>
