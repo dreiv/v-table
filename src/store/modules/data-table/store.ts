@@ -1,12 +1,13 @@
 import { defineStore } from "pinia";
 
-import { setItem } from "@/helpers";
+import { debouncedAsync, setItem } from "@/helpers";
 import { loadRecords } from "@/services";
 import { SortDirection } from "@/ui/common";
 import { USER_CONFIG, storedColumns } from "./storedColumns";
 import type { DataTableState } from "./types";
 
 let controller: AbortController;
+const lazyLoadRecords = debouncedAsync(loadRecords);
 export const useDataTableStore = defineStore("dataTableStore", {
   state: (): DataTableState => ({
     columns: storedColumns,
@@ -22,13 +23,14 @@ export const useDataTableStore = defineStore("dataTableStore", {
   }),
 
   actions: {
-    async fetchPage(page: number) {
+    async fetchPage(page: number, lazy = false) {
       if (controller) controller.abort();
+      const load = lazy ? lazyLoadRecords : loadRecords;
       controller = new AbortController();
       this.status = "loading";
 
       try {
-        const { records, total } = await loadRecords(page, this.pageSize, {
+        const { records, total } = await load(page, this.pageSize, {
           sortBy: this.sortBy,
           sortDirection: this.sortDirection,
           groupBy: this.groupBy,
@@ -69,7 +71,7 @@ export const useDataTableStore = defineStore("dataTableStore", {
       this.sortDirection = direction;
       this.sortBy = key;
 
-      this.fetchPage(this.page);
+      this.fetchPage(this.page, true);
     },
 
     persistOnUnload() {
