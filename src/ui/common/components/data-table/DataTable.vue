@@ -1,9 +1,17 @@
 <script setup lang="ts">
 import { provide, ref, toRef, computed } from "vue";
 
-import { DataTableHeader, DataTableRows } from "./sub-components";
-import { DataTableColumn, DataTableRow, SortDirection } from "./types";
+import {
+  DataTableHeader,
+  DataTableContent,
+} from "./sub-components";
 import { DataTableKey } from "./symbols";
+import type {
+  DataTableColumn,
+  DataTableRow,
+  SortDirection,
+  DatatableStatus,
+} from "./types";
 
 const props = defineProps<{
   columns: DataTableColumn[];
@@ -11,6 +19,7 @@ const props = defineProps<{
   groupBy?: string;
   sortBy?: string;
   sortDirection?: SortDirection;
+  status?: DatatableStatus;
 }>();
 
 const emit = defineEmits<{
@@ -23,6 +32,7 @@ const gridStyle = computed(() => ({
   gridTemplateColumns: props.columns
     .map(({ config: { width } }) => `${width}px`)
     .join(" "),
+  display: "grid",
 }));
 
 provide(
@@ -33,6 +43,7 @@ provide(
     groupBy: toRef(props, "groupBy"),
     sortBy: toRef(props, "sortBy"),
     sortDirection: toRef(props, "sortDirection"),
+    status: toRef(props, "status"),
     onSort: (key: string, direction: SortDirection) => {
       emit("sort", key, direction);
     },
@@ -49,7 +60,7 @@ provide(
 <template>
   <div :class="$style.grid" :style="gridStyle">
     <data-table-header />
-    <data-table-rows />
+    <data-table-content />
   </div>
 </template>
 

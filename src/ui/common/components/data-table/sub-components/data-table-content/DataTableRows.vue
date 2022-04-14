@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { inject, computed } from "vue";
-import { DataTableKey } from "../symbols";
+import { DataTableKey } from "../../symbols";
 
 const rows = computed(() => {
   const { rows, groupBy } = context?.value!;
@@ -28,7 +28,7 @@ const context = inject(DataTableKey);
 </template>
 
 <style lang="scss" module>
-@import "../variables";
+@import "../../variables";
 .groupHeader {
   height: 40px;
   position: sticky;

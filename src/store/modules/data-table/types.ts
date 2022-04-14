@@ -1,5 +1,6 @@
 import type {
   DataTableColumn,
+  DatatableStatus,
   DataTableRow,
   SortDirection,
   UserConfig,
@@ -22,5 +23,3 @@ export interface SavedConfig {
   key: string;
   config: UserConfig;
 }
-
-export type DatatableStatus = "loading" | "empty" | "error" | "success";

@@ -18,7 +18,7 @@ export const useDataTableStore = defineStore("dataTableStore", {
     groupBy: "type",
     sortBy: "",
     sortDirection: undefined,
-    status: "loading",
+    status: undefined,
   }),
 
   actions: {

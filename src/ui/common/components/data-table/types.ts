@@ -17,3 +17,4 @@ export interface DataTableRow {
 }
 
 export type SortDirection = "up" | "down" | undefined;
+export type DatatableStatus = "loading" | "empty" | "error" | "success" | undefined;
