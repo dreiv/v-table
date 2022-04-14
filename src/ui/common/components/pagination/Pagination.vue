@@ -16,7 +16,7 @@ const props = defineProps({
   },
 });
 const emit = defineEmits<{
-  (e: "goToPage", page: number): void;
+  (e: "goToPage", page: number, lazy?: boolean): void;
   (e: "update:docsPerPage", docsPerPage: number): void;
 }>();
 
@@ -28,7 +28,7 @@ const docsPerPageModel = computed<number>({
   },
   set(value: number): void {
     emit("update:docsPerPage", +value);
-    emit("goToPage", 1);
+    emit("goToPage", 1, true);
   },
 });
 
