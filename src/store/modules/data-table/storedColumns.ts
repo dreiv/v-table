@@ -1,6 +1,6 @@
 import { getItem } from "@/helpers";
 
-import { defaultColumns } from "./defaults";
+import { defaultColumns } from "./defaultColumns";
 import type { DataTableColumn } from "@/ui/common";
 import type { SavedConfig } from "./types";
 

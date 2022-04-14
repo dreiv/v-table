@@ -17,6 +17,7 @@ export const useDataTableStore = defineStore("dataTableStore", {
     page: 1,
     totalPages: 0,
     groupBy: "type",
+    filter: "",
     sortBy: "",
     sortDirection: undefined,
     status: undefined,
@@ -34,6 +35,7 @@ export const useDataTableStore = defineStore("dataTableStore", {
           sortBy: this.sortBy,
           sortDirection: this.sortDirection,
           groupBy: this.groupBy,
+          filter: this.filter,
           signal: controller.signal,
         });
 

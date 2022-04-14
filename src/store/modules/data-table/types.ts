@@ -14,6 +14,7 @@ export interface DataTableState {
   page: number;
   totalPages: number;
   groupBy: string;
+  filter: string;
   sortBy: string;
   sortDirection: SortDirection;
   status: DatatableStatus;

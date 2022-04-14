@@ -15,12 +15,25 @@ const isGrouped = computed<boolean>({
     store.groupBy = isGrouped ? "type" : "";
   },
 });
+
+const filterModel = computed<string>({
+  get(): string {
+    return store.filter;
+  },
+  set(value: string): void {
+    store.filter = value;
+    store.fetchPage(1);
+  },
+});
 </script>
 
 <template>
   <header :class="$style.header">
     <h1>Table</h1>
-    <label><input type="checkbox" v-model="isGrouped" /> grouped</label>
+    <div :class="$style.actions">
+      <input type="text" v-model="filterModel" placeholder="Filter..." />
+      <label><input type="checkbox" v-model="isGrouped" /> grouped</label>
+    </div>
   </header>
   <main :class="$style.main">
     <data-table
@@ -52,6 +65,12 @@ const isGrouped = computed<boolean>({
 .header {
   display: flex;
   justify-content: space-between;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .main {
