@@ -1,28 +1,28 @@
 export function debounced(fn: any, wait = 300): any {
   let timeout: any;
 
-  return (...args: any) => {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => fn(...args), wait);
-  };
-}
-
-export function debouncedAsync(fn: any, wait = 300): any {
-  let timeout: any;
-
-  const deb = (resolve: any, reject: any, args: any) => {
+  function implementation(
+    args: any,
+    isAsync = false,
+    resolve?: any,
+    reject?: any
+  ) {
     clearTimeout(timeout);
     timeout = setTimeout(
       () =>
-        fn(...args)
-          .then(resolve)
-          .catch(reject),
+        isAsync
+          ? fn(...args)
+              .then(resolve)
+              .catch(reject)
+          : fn(...args),
       wait
     );
-  };
+  }
 
   return (...args: any) =>
-    new Promise((resolve, reject) => {
-      deb(resolve, reject, args);
-    });
+    fn.constructor.name === "AsyncFunction"
+      ? new Promise((resolve, reject) => {
+          implementation(args, true, resolve, reject);
+        })
+      : implementation(args);
 }

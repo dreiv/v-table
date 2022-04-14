@@ -3,7 +3,7 @@ import { computed } from "vue";
 
 import { useDataTableStore } from "@/store";
 import { DataTable, Pagination } from "@/ui/common";
-import { debounced } from "@/helpers";
+import { debouncedThrottle } from "@/helpers";
 
 const store = useDataTableStore();
 store.persistOnUnload();
@@ -17,7 +17,7 @@ const isGrouped = computed<boolean>({
   },
 });
 
-const lazyFetch = debounced(() => {
+const lazyFetch = debouncedThrottle(() => {
   store.fetchPage(1);
 });
 const filterModel = computed<string>({

@@ -1,11 +1,11 @@
 import { records } from "./mocks";
 import { sortByDirection, groupRecords } from "./helpers";
 
-export function loadRecords(
+export async function loadRecords(
   page: number,
   pageSize: number,
   { sortBy, sortDirection, groupBy, filter, signal }: any = {}
-): any {
+): Promise<any> {
   if (signal?.aborted) {
     return Promise.reject("Aborted");
   }
