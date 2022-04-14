@@ -15,7 +15,9 @@ export function loadRecords(
     let res = records;
 
     if (filter) {
-      res = res.filter(({ type }) => type.includes(filter));
+      res = res.filter(({ type }) =>
+        type.toLowerCase().includes(filter.toLowerCase())
+      );
     }
 
     if (sortBy) {

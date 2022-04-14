@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { computed } from "vue";
 
 import { useDataTableStore } from "@/store";
 import { DataTable, Pagination } from "@/ui/common";
+import { debounced } from "@/helpers";
 
 const store = useDataTableStore();
 store.persistOnUnload();
@@ -16,13 +17,16 @@ const isGrouped = computed<boolean>({
   },
 });
 
+const lazyFetch = debounced(() => {
+  store.fetchPage(1);
+});
 const filterModel = computed<string>({
   get(): string {
     return store.filter;
   },
   set(value: string): void {
     store.filter = value;
-    store.fetchPage(1);
+    lazyFetch();
   },
 });
 </script>
