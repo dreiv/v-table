@@ -41,8 +41,8 @@ export const useDataTableStore = defineStore("dataTableStore", {
         this.totalRows = total;
 
         this.status = records.length ? "success" : "empty";
-      } catch (exception: any) {
-        if (!exception.includes("Aborted")) {
+      } catch (error: any) {
+        if (error === "Aborted") {
           this.status = "error";
         }
       }

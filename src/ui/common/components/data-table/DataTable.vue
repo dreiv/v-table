@@ -4,6 +4,7 @@ import { provide, ref, toRef, computed } from "vue";
 import {
   DataTableHeader,
   DataTableContent,
+  DataTableLoader,
 } from "./sub-components";
 import { DataTableKey } from "./symbols";
 import type {
@@ -58,15 +59,28 @@ provide(
 </script>
 
 <template>
-  <div :class="$style.grid" :style="gridStyle">
-    <data-table-header />
-    <data-table-content />
+  <div :class="$style.container">
+    <div :class="$style.tableWrapper">
+      <div :class="$style.grid" :style="gridStyle">
+        <data-table-header />
+        <data-table-content />
+      </div>
+    </div>
+    <data-table-loader />
   </div>
 </template>
 
 <style lang="scss" module>
+.container {
+  display: flex;
+}
+
+.tableWrapper {
+  flex: 1;
+  overflow: auto;
+}
+
 .grid {
   display: grid;
-  overflow: auto;
 }
 </style>

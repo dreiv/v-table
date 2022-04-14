@@ -30,6 +30,7 @@ const isGrouped = computed<boolean>({
       :group-by="store.groupBy"
       :sort-by="store.sortBy"
       :sort-direction="store.sortDirection"
+      :status="store.status"
       @resize="store.resizeColumn"
       @swap="store.swapColumns"
       @sort="store.sort"

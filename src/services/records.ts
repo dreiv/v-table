@@ -7,7 +7,7 @@ export function loadRecords(
   { sortBy, sortDirection, groupBy, signal }: any = {}
 ): any {
   if (signal?.aborted) {
-    return Promise.reject(new DOMException("Aborted", "AbortError"));
+    return Promise.reject("Aborted");
   }
 
   return new Promise((resolve, reject) => {
@@ -32,7 +32,7 @@ export function loadRecords(
       signal.addEventListener("abort", () => {
         clearTimeout(timeout);
 
-        reject(new DOMException("Aborted", "AbortError"));
+        reject("Aborted");
       });
     }
   });
