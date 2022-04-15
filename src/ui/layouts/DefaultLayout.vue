@@ -9,9 +9,9 @@
 
 .layout {
   @include flex-column();
-  @include box(100%);
 
   max-width: 62rem;
+  height: 100%;
   margin: 0 auto;
   padding: var(--space-md) var(--space-xs);
 }

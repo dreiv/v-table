@@ -72,8 +72,7 @@ const filterModel = computed<string>({
 }
 
 .actions {
-  display: flex;
-  align-items: center;
+  @include flex-center-vert;
   gap: 8px;
 }
 
@@ -84,6 +83,6 @@ const filterModel = computed<string>({
 }
 
 .cover {
-  @include absolute(0, 0);
+  @include cover;
 }
 </style>

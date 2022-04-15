@@ -60,5 +60,3 @@ onMounted(() => {
     <option v-for="option in [25, 50, 100]">{{ option }}</option>
   </select>
 </template>
-
-<style lang="scss" module></style>

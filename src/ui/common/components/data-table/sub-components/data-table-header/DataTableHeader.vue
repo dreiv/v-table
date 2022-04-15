@@ -68,6 +68,7 @@ function onDrop({ dataTransfer }: DragEvent, to: string) {
   z-index: ind("datatable", "header");
   position: sticky;
   top: 0;
+
   background-color: var(--surface);
   height: $headerSize;
 
