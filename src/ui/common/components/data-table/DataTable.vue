@@ -3,8 +3,9 @@ import { provide, ref, toRef, computed } from "vue";
 
 import {
   DataTableHeader,
-  DataTableContent,
+  DataTableRows,
   DataTableLoader,
+  DataTableEmpty,
 } from "./sub-components";
 import { DataTableKey } from "./symbols";
 import type {
@@ -36,6 +37,8 @@ const gridStyle = computed(() => ({
   display: "grid",
 }));
 
+const isEmpty = computed(() => !props.rows.length);
+
 provide(
   DataTableKey,
   ref({
@@ -63,9 +66,10 @@ provide(
     <div :class="$style.tableWrapper">
       <div :class="$style.grid" :style="gridStyle">
         <data-table-header />
-        <data-table-content />
+        <data-table-rows />
       </div>
     </div>
+    <data-table-empty v-if="isEmpty" />
     <data-table-loader />
   </div>
 </template>
