@@ -1,6 +1,8 @@
 <template>
   <div :class="$style.emptyContainer">
-    <p>empty</p>
+    <slot>
+      <p>empty</p>
+    </slot>
   </div>
 </template>
 
