@@ -14,9 +14,9 @@ function startDrag({ dataTransfer }: DragEvent, from: string) {
   dataTransfer?.setData(COLUMN_KEY, (draggedColumn.value = from));
 }
 
-function onDrop({ dataTransfer }: DragEvent, to: string) {
+function onDrop({ dataTransfer }: DragEvent, to: string, draggable?: boolean) {
   const from = dataTransfer?.getData(COLUMN_KEY)!;
-  if (to === from) return;
+  if (!draggable || to === from) return;
 
   context?.value.onSwap(from, to);
 }
@@ -30,21 +30,22 @@ function onDrop({ dataTransfer }: DragEvent, to: string) {
         text,
         resizable,
         sortable,
+        draggable,
         config: { width },
       } in context?.columns"
       :key="key"
       :class="[
         { [$style.isDragged]: key === draggedColumn },
-        { [$style.isDropTarget]: key === targetColumn },
+        { [$style.isDropTarget]: draggable && key === targetColumn },
         $style.column,
       ]"
-      @drop="onDrop($event, key)"
+      @drop="onDrop($event, key, draggable)"
       @dragover.prevent="targetColumn = key"
       @dragleave="targetColumn = null"
     >
       <div
-        :class="$style.title"
-        draggable="true"
+        :class="[{ [$style.draggable]: draggable }, $style.title]"
+        :draggable="draggable"
         @dragstart="startDrag($event, key)"
         @dragend="draggedColumn = targetColumn = null"
       >
@@ -84,8 +85,11 @@ function onDrop({ dataTransfer }: DragEvent, to: string) {
 .title {
   flex: 1;
 
-  cursor: grab;
   touch-action: none;
+}
+
+.draggable {
+  cursor: grab;
 }
 
 $viewportHeight: 100vh;

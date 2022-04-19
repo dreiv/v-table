@@ -9,6 +9,7 @@ export interface DataTableColumn {
   config: UserConfig;
   resizable?: boolean;
   sortable?: boolean;
+  draggable?: boolean;
 }
 
 export interface DataTableRow {
