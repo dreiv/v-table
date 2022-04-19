@@ -11,6 +11,7 @@ export interface DataTableColumn {
   sortable?: boolean;
   draggable?: boolean;
   header?: CustomComponent;
+  cell?: CustomComponent;
 }
 
 export interface CustomComponent {

@@ -2,7 +2,7 @@
 import { computed } from "vue";
 
 import { useDataTableStore } from "@/store";
-import { DataTable, Pagination } from "@/ui/common";
+import { DataTable, Pagination, CheckMark } from "@/ui/common";
 import { debouncedThrottle } from "@/helpers";
 
 const store = useDataTableStore();
@@ -51,7 +51,9 @@ const filterModel = computed<string>({
       @resize="store.resizeColumn"
       @swap="store.swapColumns"
       @sort="store.sort"
-    />
+    >
+      <template #group="{ text }"><check-mark /> {{ text }}</template>
+    </data-table>
   </main>
   <footer>
     <pagination

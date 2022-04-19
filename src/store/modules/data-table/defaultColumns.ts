@@ -11,6 +11,9 @@ export const defaultColumns: DataTableColumn[] = [
     header: {
       component: shallowRef(CheckMark),
     },
+    cell: {
+      component: shallowRef(CheckMark),
+    },
   },
   {
     key: "company",
