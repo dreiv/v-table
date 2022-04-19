@@ -26,7 +26,7 @@ const context = inject(DataTableKey);
       </slot>
     </div>
     <div v-for="{ key, cell } in context?.columns">
-      <component v-if="cell" :is="cell.component" />
+      <component v-if="cell" :is="cell.component" :id="row.id" />
       <template v-else>
         {{ row[key] }}
       </template>

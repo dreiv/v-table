@@ -1,5 +1,5 @@
 import { shallowRef } from "vue";
-import { CheckMark, DataTableColumn } from "@/ui/common";
+import { CheckMarkRow, CheckMarkHeader, DataTableColumn } from "@/ui/common";
 
 export const defaultColumns: DataTableColumn[] = [
   {
@@ -9,10 +9,10 @@ export const defaultColumns: DataTableColumn[] = [
       index: 0,
     },
     header: {
-      component: shallowRef(CheckMark),
+      component: shallowRef(CheckMarkHeader),
     },
     cell: {
-      component: shallowRef(CheckMark),
+      component: shallowRef(CheckMarkRow),
     },
   },
   {

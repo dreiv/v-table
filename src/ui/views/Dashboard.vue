@@ -2,7 +2,7 @@
 import { computed } from "vue";
 
 import { useDataTableStore } from "@/store";
-import { DataTable, Pagination, CheckMark } from "@/ui/common";
+import { DataTable, Pagination, CheckMarkGroup } from "@/ui/common";
 import { debouncedThrottle } from "@/helpers";
 
 const store = useDataTableStore();
@@ -52,7 +52,7 @@ const filterModel = computed<string>({
       @swap="store.swapColumns"
       @sort="store.sort"
     >
-      <template #group="{ text }"><check-mark /> {{ text }}</template>
+      <template #group="{ text }"><check-mark-group /> {{ text }}</template>
     </data-table>
   </main>
   <footer>

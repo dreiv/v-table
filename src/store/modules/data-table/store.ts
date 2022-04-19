@@ -12,6 +12,7 @@ export const useDataTableStore = defineStore("dataTableStore", {
   state: (): DataTableState => ({
     columns: storedColumns,
     rows: [],
+    rowsSelection: [],
     totalRows: 0,
     pageSize: 25,
     page: 1,
@@ -42,6 +43,13 @@ export const useDataTableStore = defineStore("dataTableStore", {
         this.totalPages = Math.ceil(total / this.pageSize);
         this.rows = records;
         this.totalRows = total;
+        // TODO: think this through
+        if (this.rowsSelection.length !== this.totalRows) {
+          this.rowsSelection = Array.from(
+            { length: this.totalRows },
+            () => true
+          );
+        }
 
         this.status = records.length ? "success" : "empty";
       } catch (error: any) {

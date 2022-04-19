@@ -37,8 +37,6 @@ const gridStyle = computed(() => ({
   display: "grid",
 }));
 
-const isEmpty = computed(() => !props.rows.length);
-
 provide(
   DataTableKey,
   ref({
@@ -71,7 +69,7 @@ provide(
         </data-table-rows>
       </div>
     </div>
-    <data-table-empty v-if="isEmpty">
+    <data-table-empty v-if="status === 'empty'">
       <slot name="custom" />
     </data-table-empty>
     <data-table-loader />

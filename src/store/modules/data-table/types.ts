@@ -9,6 +9,7 @@ import type {
 export interface DataTableState {
   columns: DataTableColumn[];
   rows: DataTableRow[];
+  rowsSelection: boolean[];
   totalRows: number;
   pageSize: number;
   page: number;
