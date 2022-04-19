@@ -31,6 +31,7 @@ function onDrop({ dataTransfer }: DragEvent, to: string, draggable?: boolean) {
         resizable,
         sortable,
         draggable,
+        header,
         config: { width },
       } in context?.columns"
       :key="key"
@@ -49,7 +50,10 @@ function onDrop({ dataTransfer }: DragEvent, to: string, draggable?: boolean) {
         @dragstart="startDrag($event, key)"
         @dragend="draggedColumn = targetColumn = null"
       >
-        {{ text }}
+        <component v-if="header" :is="header.component" />
+        <template v-else>
+          {{ text }}
+        </template>
       </div>
       <data-table-header-sort v-if="sortable" :column-key="key" />
       <data-table-header-resize-handle

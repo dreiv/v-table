@@ -5,11 +5,16 @@ export interface UserConfig {
 
 export interface DataTableColumn {
   key: string;
-  text: string;
+  text?: string;
   config: UserConfig;
   resizable?: boolean;
   sortable?: boolean;
   draggable?: boolean;
+  header?: CustomComponent;
+}
+
+export interface CustomComponent {
+  component: any;
 }
 
 export interface DataTableRow {
@@ -18,4 +23,9 @@ export interface DataTableRow {
 }
 
 export type SortDirection = "up" | "down" | undefined;
-export type DatatableStatus = "loading" | "empty" | "error" | "success" | undefined;
+export type DatatableStatus =
+  | "loading"
+  | "empty"
+  | "error"
+  | "success"
+  | undefined;

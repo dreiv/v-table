@@ -1,13 +1,16 @@
-import { DataTableColumn } from "@/ui/common";
+import { shallowRef } from "vue";
+import { CheckMark, DataTableColumn } from "@/ui/common";
 
 export const defaultColumns: DataTableColumn[] = [
   {
     key: "select",
-    text: "Select",
     config: {
       width: 40,
       index: 0,
-    }
+    },
+    header: {
+      component: shallowRef(CheckMark),
+    },
   },
   {
     key: "company",

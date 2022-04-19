@@ -36,9 +36,10 @@ function onSort() {
   width: 36px;
 
   cursor: pointer;
+  opacity: 0.6;
 }
 
 .focused {
-  color: var(--primary);
+  opacity: initial;
 }
 </style>
