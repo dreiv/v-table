@@ -4,7 +4,7 @@ import { sortByDirection, groupRecords } from "./helpers";
 export async function loadRecords(
   page: number,
   pageSize: number,
-  { sortBy, sortDirection, groupBy, filter, signal }: any = {}
+  { withAllIds, sortBy, sortDirection, groupBy, filter, signal }: any = {}
 ): Promise<any> {
   if (signal?.aborted) {
     return Promise.reject("Aborted");
@@ -12,7 +12,9 @@ export async function loadRecords(
 
   return new Promise((resolve, reject) => {
     const offset = (page - 1) * pageSize;
+    const auxiliary = {} as any;
     let res = records;
+    let groups;
 
     if (filter) {
       res = res.filter(({ type }) =>
@@ -25,10 +27,16 @@ export async function loadRecords(
     }
 
     if (groupBy) {
-      res = groupRecords(res, groupBy);
+      [groups, res] = groupRecords(res, groupBy);
+    }
+
+    if (withAllIds) {
+      auxiliary.ids = res.map(({ id }) => id);
+      auxiliary.groups = groups;
     }
 
     const data = {
+      ...auxiliary,
       records: res.slice(offset, offset + pageSize),
       total: res.length,
     };

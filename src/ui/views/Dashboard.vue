@@ -52,7 +52,9 @@ const filterModel = computed<string>({
       @swap="store.swapColumns"
       @sort="store.sort"
     >
-      <template #group="{ text }"><check-mark-group /> {{ text }}</template>
+      <template #group="{ group }">
+        <check-mark-group :group="group" /> {{ group }}
+      </template>
     </data-table>
   </main>
   <footer>

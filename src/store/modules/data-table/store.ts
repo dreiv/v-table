@@ -12,7 +12,8 @@ export const useDataTableStore = defineStore("dataTableStore", {
   state: (): DataTableState => ({
     columns: storedColumns,
     rows: [],
-    rowsSelection: [],
+    allRowsByIds: {},
+    allRowsGrouped: {},
     totalRows: 0,
     pageSize: 25,
     page: 1,
@@ -31,25 +32,51 @@ export const useDataTableStore = defineStore("dataTableStore", {
       this.status = "loading";
 
       try {
-        const { records, total } = await lazyLoadRecords(page, this.pageSize, {
-          sortBy: this.sortBy,
-          sortDirection: this.sortDirection,
-          groupBy: this.groupBy,
-          filter: this.filter,
-          signal: controller.signal,
-        });
+        const { records, total, groups, ids } = await lazyLoadRecords(
+          page,
+          this.pageSize,
+          {
+            sortBy: this.sortBy,
+            sortDirection: this.sortDirection,
+            groupBy: this.groupBy,
+            filter: this.filter,
+            signal: controller.signal,
+            withAllIds: true, // TODO: only on first load an filter
+          }
+        );
+
+        if (ids) {
+          this.totalRows = ids.length;
+          const rowGroups = groups.reduce(
+            (acc: any, { group, rowsTotal }: any) =>
+              acc.concat(Array.from({ length: rowsTotal }, () => group)),
+            []
+          );
+
+          this.allRowsByIds = ids.reduce(
+            (acc: any, id: string, idx: number) => {
+              acc[id] = { group: rowGroups[idx], selected: true };
+
+              return acc;
+            },
+            {}
+          );
+
+          this.allRowsGrouped = rowGroups.reduce(
+            (acc: any, group: string, idx: number) => {
+              if (!acc[group]) acc[group] = [];
+              acc[group].push(ids[idx]);
+
+              return acc;
+            },
+            {}
+          );
+        }
 
         this.page = page;
         this.totalPages = Math.ceil(total / this.pageSize);
         this.rows = records;
         this.totalRows = total;
-        // TODO: think this through
-        if (this.rowsSelection.length !== this.totalRows) {
-          this.rowsSelection = Array.from(
-            { length: this.totalRows },
-            () => true
-          );
-        }
 
         this.status = records.length ? "success" : "empty";
       } catch (error: any) {

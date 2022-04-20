@@ -3,14 +3,16 @@ import { computed } from "vue";
 import { useDataTableStore } from "@/store";
 
 const store = useDataTableStore();
+
 const state = computed(() => {
-  const { rowsSelection } = store;
-  const checkedCount = rowsSelection.filter((val) => val).length;
+  const { allRowsByIds } = store;
+  const allRows = Object.values(store.allRowsByIds);
+  const checkedCount = allRows.filter(({ selected }) => selected).length;
   const checked = checkedCount > 0;
 
   return {
     checked,
-    indeterminate: checked && checkedCount < rowsSelection.length,
+    indeterminate: checked && checkedCount < allRows.length,
   };
 });
 </script>

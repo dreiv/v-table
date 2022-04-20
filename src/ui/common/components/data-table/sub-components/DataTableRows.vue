@@ -21,7 +21,7 @@ const context = inject(DataTableKey);
 <template>
   <template v-for="row in rows" :key="row.id">
     <div v-if="row.isHeader" :class="$style.groupHeader">
-      <slot :text="row[context?.groupBy!]">
+      <slot :group="row[context?.groupBy!]">
         {{ row[context?.groupBy!] }}
       </slot>
     </div>

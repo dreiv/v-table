@@ -64,8 +64,8 @@ provide(
     <div :class="$style.tableWrapper">
       <div :class="$style.grid" :style="gridStyle">
         <data-table-header />
-        <data-table-rows v-slot="{ text }">
-          <slot name="group" :text="text" />
+        <data-table-rows v-slot="{ group }">
+          <slot name="group" :group="group" />
         </data-table-rows>
       </div>
     </div>

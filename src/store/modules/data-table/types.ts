@@ -9,7 +9,8 @@ import type {
 export interface DataTableState {
   columns: DataTableColumn[];
   rows: DataTableRow[];
-  rowsSelection: boolean[];
+  allRowsByIds: RowById;
+  allRowsGrouped: RowGrouped;
   totalRows: number;
   pageSize: number;
   page: number;
@@ -24,4 +25,15 @@ export interface DataTableState {
 export interface SavedConfig {
   key: string;
   config: UserConfig;
+}
+
+export interface RowById {
+  [key: string]: {
+    group: string;
+    selected: boolean;
+  };
+}
+
+export interface RowGrouped {
+  [key: string]: string[];
 }
