@@ -64,8 +64,8 @@ export const useDataTableStore = defineStore("dataTableStore", {
 
           this.allRowsGrouped = rowGroups.reduce(
             (acc: any, group: string, idx: number) => {
-              if (!acc[group]) acc[group] = [];
-              acc[group].push(ids[idx]);
+              if (!acc[group]) acc[group] = { rows: [], selected: true };
+              acc[group].rows.push(ids[idx]);
 
               return acc;
             },

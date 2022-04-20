@@ -39,6 +39,7 @@ function onPageChange({ target: { value } }: any) {
 }
 
 onMounted(() => {
+  // TODO: withIds
   emit("goToPage", 1);
 });
 </script>

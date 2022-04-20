@@ -35,5 +35,8 @@ export interface RowById {
 }
 
 export interface RowGrouped {
-  [key: string]: string[];
+  [key: string]: {
+    rows: string[];
+    selected: boolean;
+  };
 }
