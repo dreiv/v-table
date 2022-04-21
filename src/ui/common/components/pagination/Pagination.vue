@@ -35,7 +35,7 @@ const docsPerPageModel = computed<number>({
 function onPageChange({ target: { value } }: any) {
   if (value < 1 || value > props.totalPages) return;
 
-  emit("goToPage", +value);
+  emit("goToPage", value);
 }
 
 onMounted(() => {
@@ -57,7 +57,7 @@ onMounted(() => {
   </button>
 
   Documents per page
-  <select v-model="docsPerPageModel">
+  <select v-model.lazy.number="docsPerPageModel">
     <option v-for="option in [25, 50, 100]">{{ option }}</option>
   </select>
 </template>

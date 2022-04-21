@@ -20,12 +20,23 @@ const state = computed(() => {
     indeterminate: checked && checkedCount < groupRows.length,
   };
 });
+
+function onChange({ target: { checked } }: any) {
+  const { allRowsByIds, allRowsGrouped } = store;
+  const group = allRowsGrouped[props.group];
+
+  group.selected = checked;
+  group.rows.forEach((id) => {
+    allRowsByIds[id].selected = checked;
+  });
+}
 </script>
 
 <template>
   <input
     type="checkbox"
     :checked="state.checked"
+    @change="onChange"
     :indeterminate.prop="state.indeterminate"
     :disabled="store.status === 'loading'"
   />
