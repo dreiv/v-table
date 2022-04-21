@@ -152,7 +152,7 @@ export const records = [
     creditCardNumber: "6375-1326-8977-4449",
     currencyCode: "RUB",
     transactionType: "payment",
-    type: "Limited Liability Company Company",
+    type: "Limited Liability Company",
   },
   {
     id: "5",
@@ -2756,7 +2756,7 @@ export const records = [
     creditCardNumber: "3774-182710-61730",
     currencyCode: "BZD",
     transactionType: "deposit",
-    type: "Limited Liability Company Company",
+    type: "Limited Liability Company",
   },
   {
     id: "89",
@@ -3190,7 +3190,7 @@ export const records = [
     creditCardNumber: "3528-6161-2865-7982",
     currencyCode: "RWF",
     transactionType: "payment",
-    type: "Limited Liability Company Company",
+    type: "Limited Liability Company",
   },
   {
     id: "103",
@@ -3531,7 +3531,7 @@ export const records = [
     creditCardNumber: "6759-2844-0642-3283-46",
     currencyCode: "FJD",
     transactionType: "invoice",
-    type: "Limited Liability Company Company",
+    type: "Limited Liability Company",
   },
   {
     id: "114",
@@ -3810,7 +3810,7 @@ export const records = [
     creditCardNumber: "4828663275055",
     currencyCode: "OMR",
     transactionType: "invoice",
-    type: "Limited Liability Company Company",
+    type: "Limited Liability Company",
   },
   {
     id: "123",
@@ -3903,7 +3903,7 @@ export const records = [
     creditCardNumber: "6304-3234-6271-5380",
     currencyCode: "QAR",
     transactionType: "withdrawal",
-    type: "Limited Liability Company Company",
+    type: "Limited Liability Company",
   },
   {
     id: "126",
@@ -3934,7 +3934,7 @@ export const records = [
     creditCardNumber: "5439-9907-3067-3767",
     currencyCode: "LTL",
     transactionType: "deposit",
-    type: "Limited Liability Company Company",
+    type: "Limited Liability Company",
   },
   {
     id: "127",
@@ -4368,7 +4368,7 @@ export const records = [
     creditCardNumber: "3540-2927-6105-8643",
     currencyCode: "WST",
     transactionType: "invoice",
-    type: "Limited Liability Company Company",
+    type: "Limited Liability Company",
   },
   {
     id: "141",
@@ -4740,7 +4740,7 @@ export const records = [
     creditCardNumber: "4989897596235",
     currencyCode: "HRK",
     transactionType: "invoice",
-    type: "Limited Liability Company Company",
+    type: "Limited Liability Company",
   },
   {
     id: "153",
@@ -5949,7 +5949,7 @@ export const records = [
     creditCardNumber: "6398-3928-2019-0878",
     currencyCode: "OMR",
     transactionType: "payment",
-    type: "Limited Liability Company Company",
+    type: "Limited Liability Company",
   },
   {
     id: "192",
@@ -6693,7 +6693,7 @@ export const records = [
     creditCardNumber: "6391-2041-6059-3782",
     currencyCode: "SCR",
     transactionType: "deposit",
-    type: "Limited Liability Company Company",
+    type: "Limited Liability Company",
   },
   {
     id: "216",
@@ -8770,7 +8770,7 @@ export const records = [
     creditCardNumber: "5020-2391-2622-3396",
     currencyCode: "SOS",
     transactionType: "withdrawal",
-    type: "Limited Liability Company Company",
+    type: "Limited Liability Company",
   },
   {
     id: "283",
@@ -12614,7 +12614,7 @@ export const records = [
     creditCardNumber: "6767-2670-9034-8626-265",
     currencyCode: "AED",
     transactionType: "deposit",
-    type: "Limited Liability Company Company",
+    type: "Limited Liability Company",
   },
   {
     id: "407",
@@ -15125,7 +15125,7 @@ export const records = [
     creditCardNumber: "3677-541015-8498",
     currencyCode: "AED",
     transactionType: "invoice",
-    type: "Limited Liability Company Company",
+    type: "Limited Liability Company",
   },
   {
     id: "488",
