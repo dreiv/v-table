@@ -88,15 +88,14 @@ export const useDataTableStore = defineStore("dataTableStore", {
     },
 
     resizeColumn(key: string, diff: number) {
-      const cols = [...this.columns];
-      const resizedCfg = cols.find((c) => key === c.key)!.config;
-      resizedCfg.width += diff;
-
-      this.columns = cols;
+      this.columnsByKey[key].config.width += diff;
     },
 
     swapColumns(from: string, to: string) {
-      const cols = [...this.columns];
+      const cols = this.columns.map(({ config, ...col }) => ({
+        ...col,
+        config: { ...config },
+      }));
       const fromCfg = cols.find(({ key }) => key === from)!.config;
       const toCfg = cols.find(({ key }) => key === to)!.config;
 
@@ -148,5 +147,14 @@ export const useDataTableStore = defineStore("dataTableStore", {
       this.allRowsGrouped = groups;
       this.allRowsByIds = rowsByIds;
     },
+  },
+
+  getters: {
+    columnsByKey: (state) =>
+      state.columns.reduce((acc: any, item) => {
+        acc[item.key] = item;
+
+        return acc;
+      }, {}),
   },
 });
