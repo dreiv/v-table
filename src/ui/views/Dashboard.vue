@@ -1,32 +1,32 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 
 import { useDataTableStore } from "@/store";
-import { DataTable, Pagination, CheckMarkGroup } from "@/ui/common";
-import { debouncedThrottle } from "@/helpers";
+import {
+  CheckMarkGroup,
+  DataTable,
+  Pagination,
+  useSaveColumns,
+} from "@/ui/common";
 
+onMounted(() => useSaveColumns());
 const store = useDataTableStore();
-store.persistOnUnload();
 
-const isGrouped = computed<boolean>({
+const isGroupedModel = computed<boolean>({
   get(): boolean {
     return !!store.groupBy;
   },
-  set(isGrouped: boolean): void {
-    store.groupBy = isGrouped ? "type" : "";
+  set(value: boolean): void {
+    store.groupBy = value ? "type" : "";
   },
 });
 
-const lazyFetch = debouncedThrottle(() => {
-  store.fetchPage(1);
-});
 const filterModel = computed<string>({
   get(): string {
     return store.filter;
   },
   set(value: string): void {
-    store.filter = value;
-    lazyFetch();
+    store.filterBy(value);
   },
 });
 </script>
@@ -36,7 +36,7 @@ const filterModel = computed<string>({
     <h1>Table</h1>
     <div :class="$style.actions">
       <input type="text" v-model="filterModel" placeholder="Filter..." />
-      <label><input type="checkbox" v-model="isGrouped" /> grouped</label>
+      <label><input type="checkbox" v-model="isGroupedModel" /> grouped</label>
     </div>
   </header>
   <main :class="$style.main">

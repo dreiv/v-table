@@ -1,13 +1,14 @@
 import { defineStore } from "pinia";
 
-import { debouncedThrottle, setItem } from "@/helpers";
+import { clone, debouncedThrottle } from "@/helpers";
 import { loadRecords } from "@/services";
 import { SortDirection } from "@/ui/common";
-import { USER_CONFIG, storedColumns } from "./storedColumns";
-import type { DataTableState } from "./types";
+import { storedColumns } from "./storedColumns";
+import type { DataTableState, RowById } from "./types";
 
 let controller: AbortController;
 const lazyLoadRecords = debouncedThrottle(loadRecords);
+
 export const useDataTableStore = defineStore("dataTableStore", {
   state: (): DataTableState => ({
     columns: storedColumns,
@@ -110,13 +111,42 @@ export const useDataTableStore = defineStore("dataTableStore", {
       this.fetchPage(this.page);
     },
 
-    persistOnUnload() {
-      window.addEventListener("beforeunload", () => {
-        setItem(
-          USER_CONFIG,
-          this.columns.map(({ key, config }) => ({ key, config }))
-        );
+    filterBy(value: string) {
+      this.filter = value;
+      this.fetchPage(1);
+    },
+
+    selectRow(id: string, checked: boolean) {
+      const row = this.allRowsByIds[id];
+      const group = this.allRowsGrouped[row.group];
+
+      row.selected = checked;
+      group.selected = group.rows.every(
+        (row) => this.allRowsByIds[row].selected
+      );
+    },
+
+    selectGroup(group: string, checked: boolean) {
+      const targetGroup = this.allRowsGrouped[group];
+      const rowsByIds = clone(this.allRowsByIds);
+
+      targetGroup.selected = checked;
+      targetGroup.rows.forEach((id) => {
+        rowsByIds[id].selected = checked;
       });
+
+      this.allRowsByIds = rowsByIds;
+    },
+
+    selectAll(checked: boolean) {
+      const groups = clone(this.allRowsGrouped);
+      const rowsByIds = clone(this.allRowsByIds);
+
+      Object.values(groups).forEach((group) => (group.selected = checked));
+      Object.values(rowsByIds).forEach((row) => (row.selected = checked));
+
+      this.allRowsGrouped = groups;
+      this.allRowsByIds = rowsByIds;
     },
   },
 });

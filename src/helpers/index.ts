@@ -1,3 +1,4 @@
+export * from "./clone";
 export * from "./debounced";
 export * from "./debouncedThrottle";
 export * from "./groupBy";

@@ -7,36 +7,26 @@ const props = defineProps<{
   group: string;
 }>();
 
+const groupRows = computed(() => store.allRowsGrouped[props.group].rows);
 const state = computed(() => {
-  const { allRowsByIds, allRowsGrouped } = store;
-  const groupRows = allRowsGrouped[props.group].rows;
-  const checkedCount = groupRows.filter(
+  const { allRowsByIds } = store;
+  const checkedCount = groupRows.value.filter(
     (id) => allRowsByIds[id].selected
   ).length;
   const checked = checkedCount > 0;
 
   return {
     checked,
-    indeterminate: checked && checkedCount < groupRows.length,
+    indeterminate: checked && checkedCount < groupRows.value.length,
   };
 });
-
-function onChange({ target: { checked } }: any) {
-  const { allRowsByIds, allRowsGrouped } = store;
-  const group = allRowsGrouped[props.group];
-
-  group.selected = checked;
-  group.rows.forEach((id) => {
-    allRowsByIds[id].selected = checked;
-  });
-}
 </script>
 
 <template>
   <input
     type="checkbox"
+    @change="({ target: { checked } }: any) => store.selectGroup(props.group, checked)"
     :checked="state.checked"
-    @change="onChange"
     :indeterminate.prop="state.indeterminate"
     :disabled="store.status === 'loading'"
   />

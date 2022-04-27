@@ -7,25 +7,17 @@ const props = defineProps<{
   id: string;
 }>();
 
-const checked = computed({
+const checkedModel = computed({
   get(): boolean {
     return store.allRowsByIds[props.id].selected;
   },
   set(value: boolean): void {
-    const { allRowsByIds, allRowsGrouped } = store;
-    const row = allRowsByIds[props.id];
-    const group = allRowsGrouped[row.group];
-
-    row.selected = value;
-    group.selected = group.rows.every((row) => allRowsByIds[row].selected);
+    store.selectRow(props.id, value);
   },
 });
+const isDisabled = computed(() => store.status === "loading");
 </script>
 
 <template>
-  <input
-    type="checkbox"
-    v-model="checked"
-    :disabled="store.status === 'loading'"
-  />
+  <input type="checkbox" v-model="checkedModel" :disabled="isDisabled" />
 </template>
