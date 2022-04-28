@@ -32,5 +32,6 @@ const checkedModel = computed({
   left: 0;
 
   background-color: var(--surface);
+  border-bottom: 1px solid var(--neutral);
 }
 </style>
