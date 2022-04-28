@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { inject, computed } from "vue";
 import { DataTableKey } from "../symbols";
+import DataTableOverflow from "./DataTableOverflow.vue";
 
 const rows = computed(() => {
   const { rows, groupBy } = context?.value!;
@@ -25,11 +26,16 @@ const context = inject(DataTableKey);
         {{ row[context?.groupBy!] }}
       </slot>
     </div>
-    <template v-for="{ key, cell } in context?.columns">
+    <template v-for="{ key, cell, config: { width } } in context?.columns">
       <component v-if="cell" :is="cell.component" :id="row.id" />
-      <div v-else :class="$style.cell">
+      <data-table-overflow
+        v-else
+        :width="width"
+        :title="row[key]"
+        :class="$style.cell"
+      >
         {{ row[key] }}
-      </div>
+      </data-table-overflow>
     </template>
   </template>
 </template>

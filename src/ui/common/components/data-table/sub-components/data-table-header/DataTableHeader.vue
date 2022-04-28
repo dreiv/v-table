@@ -3,6 +3,7 @@ import { inject, ref } from "vue";
 
 import DataTableHeaderResizeHandle from "./DataTableHeaderResizeHandle.vue";
 import DataTableHeaderSort from "./DataTableHeaderSort.vue";
+import DataTableOverflow from "../DataTableOverflow.vue";
 import { DataTableKey } from "../../symbols";
 
 const context = inject(DataTableKey);
@@ -46,15 +47,17 @@ function onDrop({ dataTransfer }: DragEvent, to: string, draggable?: boolean) {
       @dragleave="targetColumn = null"
     >
       <component v-if="header" :is="header.component" />
-      <div
+      <data-table-overflow
         v-else
+        :width="width"
+        :title="text!"
         :class="[{ [$style.draggable]: draggable }, $style.title]"
         :draggable="draggable"
         @dragstart="startDrag($event, key)"
         @dragend="draggedColumn = targetColumn = null"
       >
         {{ text }}
-      </div>
+      </data-table-overflow>
       <data-table-header-sort v-if="sortable" :column-key="key" />
       <data-table-header-resize-handle
         v-if="resizable"
@@ -88,6 +91,7 @@ function onDrop({ dataTransfer }: DragEvent, to: string, draggable?: boolean) {
 }
 
 .title {
+  @include trim(2);
   @include flex-center-vert;
   flex: 1;
 
