@@ -39,21 +39,21 @@ function onDrop({ dataTransfer }: DragEvent, to: string, draggable?: boolean) {
         { [$style.isDragged]: key === draggedColumn },
         { [$style.isDropTarget]: draggable && key === targetColumn },
         $style.column,
+        header?.class,
       ]"
       @drop="onDrop($event, key, draggable)"
       @dragover.prevent="targetColumn = key"
       @dragleave="targetColumn = null"
     >
+      <component v-if="header" :is="header.component" />
       <div
+        v-else
         :class="[{ [$style.draggable]: draggable }, $style.title]"
         :draggable="draggable"
         @dragstart="startDrag($event, key)"
         @dragend="draggedColumn = targetColumn = null"
       >
-        <component v-if="header" :is="header.component" />
-        <template v-else>
-          {{ text }}
-        </template>
+        {{ text }}
       </div>
       <data-table-header-sort v-if="sortable" :column-key="key" />
       <data-table-header-resize-handle

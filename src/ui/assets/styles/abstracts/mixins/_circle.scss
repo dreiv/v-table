@@ -1,4 +1,4 @@
-@import './box';
+@import "./box";
 
 @mixin circle($size, $background-color) {
   @include box($size);

@@ -20,14 +20,28 @@ const state = computed(() => {
     indeterminate: checked && checkedCount < groupRows.value.length,
   };
 });
+const checkMarkStyle = computed(() => ({
+  width: `${store.columns[0].config.width}px`,
+}));
 </script>
 
 <template>
-  <input
-    type="checkbox"
-    @change="({ target: { checked } }: any) => store.selectGroup(props.group, checked)"
-    :checked="state.checked"
-    :indeterminate.prop="state.indeterminate"
-    :disabled="store.isLoading"
-  />
+  <label :class="$style.wrapper" :style="checkMarkStyle">
+    <input
+      type="checkbox"
+      @change="({ target: { checked } }: any) => store.selectGroup(props.group, checked)"
+      :checked="state.checked"
+      :indeterminate.prop="state.indeterminate"
+      :disabled="store.isLoading"
+    />
+  </label>
 </template>
+
+<style lang="scss" module>
+@import "@/ui/assets/styles/abstracts";
+
+.wrapper {
+  @include flex-center;
+  height: 100%;
+}
+</style>

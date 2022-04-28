@@ -18,5 +18,19 @@ const checkedModel = computed({
 </script>
 
 <template>
-  <input type="checkbox" v-model="checkedModel" :disabled="store.isLoading" />
+  <label :class="$style.wrapper">
+    <input type="checkbox" v-model="checkedModel" :disabled="store.isLoading" />
+  </label>
 </template>
+
+<style lang="scss" module>
+@import "@/ui/assets/styles/abstracts";
+
+.wrapper {
+  @include flex-center;
+  position: sticky;
+  left: 0;
+
+  background-color: var(--surface);
+}
+</style>

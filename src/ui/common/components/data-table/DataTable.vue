@@ -61,7 +61,7 @@ provide(
 
 <template>
   <div :class="$style.container">
-    <div :class="$style.tableWrapper">
+    <div :class="$style.wrapper">
       <div :class="$style.grid" :style="gridStyle">
         <data-table-header />
         <data-table-rows v-slot="{ group }">
@@ -81,7 +81,7 @@ provide(
   display: flex;
 }
 
-.tableWrapper {
+.wrapper {
   flex: 1;
   overflow: auto;
 }

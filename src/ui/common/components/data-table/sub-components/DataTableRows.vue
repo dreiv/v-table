@@ -25,18 +25,21 @@ const context = inject(DataTableKey);
         {{ row[context?.groupBy!] }}
       </slot>
     </div>
-    <div v-for="{ key, cell } in context?.columns">
+    <template v-for="{ key, cell } in context?.columns">
       <component v-if="cell" :is="cell.component" :id="row.id" />
-      <template v-else>
+      <div v-else>
         {{ row[key] }}
-      </template>
-    </div>
+      </div>
+    </template>
   </template>
 </template>
 
 <style lang="scss" module>
+@import "@/ui/assets/styles/abstracts";
 @import "../variables";
+
 .groupHeader {
+  z-index: ind("datatable", "group-header");
   height: 40px;
   position: sticky;
   top: $headerSize;

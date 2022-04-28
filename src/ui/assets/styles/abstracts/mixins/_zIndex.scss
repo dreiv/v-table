@@ -1,13 +1,16 @@
 $z-indices: (
-    "datatable": (
-        "header": 1,
-    ),
-    "main-content": 1
+  "datatable": (
+    "header": 1,
+    "group-header": 1,
+  ),
+  "main-content": 1,
 );
 
-@function ind($element, $sub-element: false){
-    $index: map-get($z-indices, $element);
-    @if $sub-element{ $index: map-get($index, $sub-element); }
+@function ind($element, $sub-element: false) {
+  $index: map-get($z-indices, $element);
+  @if $sub-element {
+    $index: map-get($index, $sub-element);
+  }
 
-    @return $index;
+  @return $index;
 }

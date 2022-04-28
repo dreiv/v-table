@@ -14,6 +14,7 @@ const defaultColumns: DataTableColumn[] = [
     },
     header: {
       component: shallowRef(CheckMarkHeader),
+      class: "dt-check-mark-header",
     },
     cell: {
       component: shallowRef(CheckMarkRow),

@@ -16,6 +16,7 @@ export interface DataTableColumn {
 
 export interface CustomComponent {
   component: any;
+  class?: string;
 }
 
 export interface DataTableRow {

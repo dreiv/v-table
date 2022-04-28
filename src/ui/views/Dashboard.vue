@@ -53,7 +53,9 @@ const filterModel = computed<string>({
       @sort="store.sort"
     >
       <template #group="{ group }">
-        <check-mark-group :group="group" /> {{ group }}
+        <div :class="$style.groupWrapper">
+          <check-mark-group :group="group" /> {{ group }}
+        </div>
       </template>
     </data-table>
   </main>
@@ -89,5 +91,22 @@ const filterModel = computed<string>({
 
 .cover {
   @include cover;
+}
+
+.groupWrapper {
+  @include flex-center-vert;
+  @include box(fit-content, 100%);
+
+  position: sticky;
+  left: 0;
+}
+</style>
+
+<style lang="scss">
+.dt-check-mark-header {
+  position: sticky;
+  left: 0;
+
+  background-color: var(--surface);
 }
 </style>

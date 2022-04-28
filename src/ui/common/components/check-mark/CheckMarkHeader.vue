@@ -17,11 +17,22 @@ const state = computed(() => {
 </script>
 
 <template>
-  <input
-    type="checkbox"
-    :checked="state.checked"
-    @change="({ target: { checked } }: any) => store.selectAll(checked)"
-    :indeterminate.prop="state.indeterminate"
-    :disabled="store.isLoading"
-  />
+  <label :class="$style.wrapper">
+    <input
+      type="checkbox"
+      :checked="state.checked"
+      @change="({ target: { checked } }: any) => store.selectAll(checked)"
+      :indeterminate.prop="state.indeterminate"
+      :disabled="store.isLoading"
+    />
+  </label>
 </template>
+
+<style lang="scss" module>
+@import "@/ui/assets/styles/abstracts";
+
+.wrapper {
+  @include flex-center;
+  width: 100%;
+}
+</style>

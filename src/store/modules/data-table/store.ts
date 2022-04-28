@@ -121,7 +121,7 @@ export const useDataTableStore = defineStore("dataTableStore", {
 
     filterBy(value: string) {
       this.filter = value;
-      this.fetchPage(1);
+      this.fetchPage(1, true);
     },
 
     selectRow(id: string, checked: boolean) {
