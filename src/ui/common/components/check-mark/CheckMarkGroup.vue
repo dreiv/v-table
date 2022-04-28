@@ -1,11 +1,18 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useDataTableStore } from "@/store";
 
 const store = useDataTableStore();
 const props = defineProps<{
   group: string;
 }>();
+
+const checkMarkStyle = ref();
+onMounted(() => {
+  checkMarkStyle.value = {
+    width: `${store.columns[0].config.width}px`,
+  };
+});
 
 const groupRows = computed(() => store.allGroups[props.group].rows);
 const state = computed(() => {
@@ -20,9 +27,6 @@ const state = computed(() => {
     indeterminate: checked && checkedCount < groupRows.value.length,
   };
 });
-const checkMarkStyle = computed(() => ({
-  width: `${store.columns[0].config.width}px`,
-}));
 </script>
 
 <template>
