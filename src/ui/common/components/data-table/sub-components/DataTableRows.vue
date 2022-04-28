@@ -27,7 +27,7 @@ const context = inject(DataTableKey);
     </div>
     <template v-for="{ key, cell } in context?.columns">
       <component v-if="cell" :is="cell.component" :id="row.id" />
-      <div v-else>
+      <div v-else :class="$style.cell">
         {{ row[key] }}
       </div>
     </template>
@@ -45,6 +45,14 @@ const context = inject(DataTableKey);
   top: $headerSize;
 
   grid-column: 1 / -1;
-  background-color: lightgoldenrodyellow;
+  background-color: var(--surface);
+  border-bottom: 1px solid var(--neutral);
+}
+
+.cell {
+  @include trim;
+
+  height: 30px;
+  border-bottom: 1px solid var(--neutral);
 }
 </style>

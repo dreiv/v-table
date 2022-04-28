@@ -34,7 +34,6 @@ const gridStyle = computed(() => ({
   gridTemplateColumns: props.columns
     .map(({ config: { width } }) => `${width}px`)
     .join(" "),
-  display: "grid",
 }));
 
 provide(

@@ -75,6 +75,7 @@ function onDrop({ dataTransfer }: DragEvent, to: string, draggable?: boolean) {
   top: 0;
 
   background-color: var(--surface);
+  border-bottom: 1px solid var(--neutral);
   height: $headerSize;
 
   display: grid;
@@ -87,6 +88,7 @@ function onDrop({ dataTransfer }: DragEvent, to: string, draggable?: boolean) {
 }
 
 .title {
+  @include flex-center-vert;
   flex: 1;
 
   touch-action: none;

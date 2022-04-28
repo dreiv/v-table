@@ -16,7 +16,7 @@ export const useDataTableStore = defineStore("dataTableStore", {
     rows: [],
     allRowsByIds: {},
     allGroups: {},
-    pageSize: 25,
+    pageSize: 50,
     page: 1,
     totalPages: 0,
     groupBy: "type",
