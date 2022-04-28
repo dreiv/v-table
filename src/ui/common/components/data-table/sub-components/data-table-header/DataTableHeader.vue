@@ -49,6 +49,7 @@ function onDrop({ dataTransfer }: DragEvent, to: string, draggable?: boolean) {
       <component v-if="header" :is="header.component" />
       <data-table-overflow
         v-else
+        v-memo
         :width="width"
         :title="text!"
         :class="[{ [$style.draggable]: draggable }, $style.title]"

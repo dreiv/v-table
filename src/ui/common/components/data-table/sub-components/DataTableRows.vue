@@ -30,6 +30,7 @@ const context = inject(DataTableKey);
       <component v-if="cell" :is="cell.component" :id="row.id" />
       <data-table-overflow
         v-else
+        v-memo
         :width="width"
         :title="row[key]"
         :class="$style.cell"
