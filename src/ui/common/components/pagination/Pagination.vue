@@ -4,7 +4,7 @@ import { computed, onMounted } from "vue";
 const props = defineProps({
   page: {
     type: Number,
-    default: 0,
+    default: 1,
   },
   totalPages: {
     type: Number,
@@ -14,14 +14,17 @@ const props = defineProps({
     type: Number,
     default: 0,
   },
+  busy: Boolean,
 });
 const emit = defineEmits<{
   (e: "goToPage", page: number, withAllIds?: boolean): void;
   (e: "update:docsPerPage", docsPerPage: number): void;
 }>();
 
-const isPrevDisabled = computed(() => props.page === 1);
-const isNextDisabled = computed(() => props.page === props.totalPages);
+const isPrevDisabled = computed(() => props.busy || props.page === 1);
+const isNextDisabled = computed(
+  () => props.busy || props.page === props.totalPages
+);
 const docsPerPageModel = computed<number>({
   get(): number {
     return props.docsPerPage;
@@ -32,11 +35,16 @@ const docsPerPageModel = computed<number>({
   },
 });
 
-function onPageChange({ target: { value } }: any) {
-  if (value < 1 || value > props.totalPages) return;
+const pageModel = computed<number>({
+  get(): number {
+    return props.page;
+  },
+  set(value: number): void {
+    if (value < 1 || value > props.totalPages) return;
 
-  emit("goToPage", value);
-}
+    emit("goToPage", value);
+  },
+});
 
 onMounted(() => {
   emit("goToPage", 1, true);
@@ -48,7 +56,8 @@ onMounted(() => {
     prev
   </button>
   <label
-    ><input type="number" @change="onPageChange" :value="page" /> of
+    ><input type="number" v-model.lazy="pageModel" :disabled="busy" />
+    of
     {{ totalPages }}
   </label>
   <button :disabled="isNextDisabled" @click="emit('goToPage', page + 1)">
@@ -56,7 +65,7 @@ onMounted(() => {
   </button>
 
   Documents per page
-  <select v-model.lazy.number="docsPerPageModel">
+  <select v-model.lazy.number="docsPerPageModel" :disabled="busy">
     <option v-for="option in [25, 50, 100]">{{ option }}</option>
   </select>
 </template>

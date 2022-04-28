@@ -22,6 +22,6 @@ const state = computed(() => {
     :checked="state.checked"
     @change="({ target: { checked } }: any) => store.selectAll(checked)"
     :indeterminate.prop="state.indeterminate"
-    :disabled="store.status === 'loading'"
+    :disabled="store.isLoading"
   />
 </template>

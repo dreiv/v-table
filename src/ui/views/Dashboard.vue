@@ -61,6 +61,7 @@ const filterModel = computed<string>({
     <pagination
       :page="store.page"
       :total-pages="store.totalPages"
+      :busy="store.isLoading"
       v-model:docs-per-page="store.pageSize"
       @go-to-page="store.fetchPage"
     />

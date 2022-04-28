@@ -16,7 +16,6 @@ export const useDataTableStore = defineStore("dataTableStore", {
     rows: [],
     allRowsByIds: {},
     allGroups: {},
-    totalRows: 0,
     pageSize: 25,
     page: 1,
     totalPages: 0,
@@ -48,7 +47,6 @@ export const useDataTableStore = defineStore("dataTableStore", {
         );
 
         if (ids) {
-          this.totalRows = ids.length;
           const rowGroups = groups.reduce(
             (acc: any, { group, rowsTotal }: any) =>
               acc.concat(Array.from({ length: rowsTotal }, () => group)),
@@ -78,7 +76,6 @@ export const useDataTableStore = defineStore("dataTableStore", {
         this.page = page;
         this.totalPages = Math.ceil(total / this.pageSize);
         this.rows = records;
-        this.totalRows = total;
 
         this.status = records.length ? "success" : "empty";
       } catch (error: any) {
@@ -162,11 +159,12 @@ export const useDataTableStore = defineStore("dataTableStore", {
   },
 
   getters: {
-    columnsByKey: (state) =>
-      state.columns.reduce((acc: any, item) => {
+    columnsByKey: ({ columns }) =>
+      columns.reduce((acc: any, item) => {
         acc[item.key] = item;
 
         return acc;
       }, {}),
+    isLoading: ({ status }) => status === "loading",
   },
 });

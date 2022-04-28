@@ -15,9 +15,8 @@ const checkedModel = computed({
     store.selectRow(props.id, value);
   },
 });
-const isDisabled = computed(() => store.status === "loading");
 </script>
 
 <template>
-  <input type="checkbox" v-model="checkedModel" :disabled="isDisabled" />
+  <input type="checkbox" v-model="checkedModel" :disabled="store.isLoading" />
 </template>

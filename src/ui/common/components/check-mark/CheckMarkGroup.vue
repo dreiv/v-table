@@ -28,6 +28,6 @@ const state = computed(() => {
     @change="({ target: { checked } }: any) => store.selectGroup(props.group, checked)"
     :checked="state.checked"
     :indeterminate.prop="state.indeterminate"
-    :disabled="store.status === 'loading'"
+    :disabled="store.isLoading"
   />
 </template>

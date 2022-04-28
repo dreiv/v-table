@@ -11,7 +11,6 @@ export interface DataTableState {
   rows: DataTableRow[];
   allRowsByIds: RowById;
   allGroups: RowGrouped;
-  totalRows: number;
   pageSize: number;
   page: number;
   totalPages: number;
