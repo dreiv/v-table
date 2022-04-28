@@ -5,7 +5,7 @@ import { useDataTableStore } from "@/store";
 const store = useDataTableStore();
 
 const state = computed(() => {
-  const allGroups = Object.values(store.allRowsGrouped);
+  const allGroups = Object.values(store.allGroups);
   const checkedCount = allGroups.filter(({ selected }) => selected).length;
   const checked = checkedCount > 0;
 

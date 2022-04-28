@@ -10,7 +10,7 @@ export interface DataTableState {
   columns: DataTableColumn[];
   rows: DataTableRow[];
   allRowsByIds: RowById;
-  allRowsGrouped: RowGrouped;
+  allGroups: RowGrouped;
   totalRows: number;
   pageSize: number;
   page: number;

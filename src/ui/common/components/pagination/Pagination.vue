@@ -16,7 +16,7 @@ const props = defineProps({
   },
 });
 const emit = defineEmits<{
-  (e: "goToPage", page: number, lazy?: boolean): void;
+  (e: "goToPage", page: number, withAllIds?: boolean): void;
   (e: "update:docsPerPage", docsPerPage: number): void;
 }>();
 
@@ -27,8 +27,8 @@ const docsPerPageModel = computed<number>({
     return props.docsPerPage;
   },
   set(value: number): void {
-    emit("update:docsPerPage", +value);
-    emit("goToPage", 1, true);
+    emit("update:docsPerPage", value);
+    emit("goToPage", 1);
   },
 });
 
@@ -39,8 +39,7 @@ function onPageChange({ target: { value } }: any) {
 }
 
 onMounted(() => {
-  // TODO: withIds
-  emit("goToPage", 1);
+  emit("goToPage", 1, true);
 });
 </script>
 

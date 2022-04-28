@@ -2,9 +2,10 @@ import { defineStore } from "pinia";
 
 import { clone, debouncedThrottle } from "@/helpers";
 import { loadRecords } from "@/services";
-import { SortDirection } from "@/ui/common";
+import { DataTableColumn, SortDirection } from "@/ui/common";
+
 import { storedColumns } from "./storedColumns";
-import type { DataTableState, RowById } from "./types";
+import type { DataTableState } from "./types";
 
 let controller: AbortController;
 const lazyLoadRecords = debouncedThrottle(loadRecords);
@@ -14,7 +15,7 @@ export const useDataTableStore = defineStore("dataTableStore", {
     columns: storedColumns,
     rows: [],
     allRowsByIds: {},
-    allRowsGrouped: {},
+    allGroups: {},
     totalRows: 0,
     pageSize: 25,
     page: 1,
@@ -27,7 +28,7 @@ export const useDataTableStore = defineStore("dataTableStore", {
   }),
 
   actions: {
-    async fetchPage(page: number) {
+    async fetchPage(page: number, withAllIds = false) {
       if (controller) controller.abort();
       controller = new AbortController();
       this.status = "loading";
@@ -42,7 +43,7 @@ export const useDataTableStore = defineStore("dataTableStore", {
             groupBy: this.groupBy,
             filter: this.filter,
             signal: controller.signal,
-            withAllIds: true, // TODO: only on first load an filter
+            withAllIds,
           }
         );
 
@@ -63,7 +64,7 @@ export const useDataTableStore = defineStore("dataTableStore", {
             {}
           );
 
-          this.allRowsGrouped = rowGroups.reduce(
+          this.allGroups = rowGroups.reduce(
             (acc: any, group: string, idx: number) => {
               if (!acc[group]) acc[group] = { rows: [], selected: true };
               acc[group].rows.push(ids[idx]);
@@ -92,13 +93,24 @@ export const useDataTableStore = defineStore("dataTableStore", {
     },
 
     swapColumns(from: string, to: string) {
-      const cols = this.columns.map(({ config, ...col }) => ({
-        ...col,
-        config: { ...config },
-      }));
-      const fromCfg = cols.find(({ key }) => key === from)!.config;
-      const toCfg = cols.find(({ key }) => key === to)!.config;
+      let fromCfg, toCfg;
+      const cols = this.columns.reduce(
+        (acc: DataTableColumn[], { config, ...col }) => {
+          const clone = {
+            ...col,
+            config: { ...config },
+          };
+          acc.push(clone);
 
+          if (col.key === from) fromCfg = clone.config;
+          if (col.key === to) toCfg = clone.config;
+
+          return acc;
+        },
+        []
+      );
+
+      // @ts-ignore: Object is possibly 'null'.
       [fromCfg.index, toCfg.index] = [toCfg.index, fromCfg.index];
       this.columns = cols.sort((a, z) => a.config!.index - z.config!.index);
     },
@@ -117,7 +129,7 @@ export const useDataTableStore = defineStore("dataTableStore", {
 
     selectRow(id: string, checked: boolean) {
       const row = this.allRowsByIds[id];
-      const group = this.allRowsGrouped[row.group];
+      const group = this.allGroups[row.group];
 
       row.selected = checked;
       group.selected = group.rows.every(
@@ -125,27 +137,27 @@ export const useDataTableStore = defineStore("dataTableStore", {
       );
     },
 
-    selectGroup(group: string, checked: boolean) {
-      const targetGroup = this.allRowsGrouped[group];
-      const rowsByIds = clone(this.allRowsByIds);
+    selectGroup(targetGroup: string, checked: boolean) {
+      const group = this.allGroups[targetGroup];
+      const rows = clone(this.allRowsByIds);
 
-      targetGroup.selected = checked;
-      targetGroup.rows.forEach((id) => {
-        rowsByIds[id].selected = checked;
+      group.selected = checked;
+      group.rows.forEach((id) => {
+        rows[id].selected = checked;
       });
 
-      this.allRowsByIds = rowsByIds;
+      this.allRowsByIds = rows;
     },
 
     selectAll(checked: boolean) {
-      const groups = clone(this.allRowsGrouped);
-      const rowsByIds = clone(this.allRowsByIds);
+      const groups = clone(this.allGroups);
+      const rows = clone(this.allRowsByIds);
 
       Object.values(groups).forEach((group) => (group.selected = checked));
-      Object.values(rowsByIds).forEach((row) => (row.selected = checked));
+      Object.values(rows).forEach((row) => (row.selected = checked));
 
-      this.allRowsGrouped = groups;
-      this.allRowsByIds = rowsByIds;
+      this.allGroups = groups;
+      this.allRowsByIds = rows;
     },
   },
 

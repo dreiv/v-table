@@ -7,7 +7,7 @@ const props = defineProps<{
   group: string;
 }>();
 
-const groupRows = computed(() => store.allRowsGrouped[props.group].rows);
+const groupRows = computed(() => store.allGroups[props.group].rows);
 const state = computed(() => {
   const { allRowsByIds } = store;
   const checkedCount = groupRows.value.filter(
