@@ -21,9 +21,9 @@ const state = computed(() => {
     <input
       type="checkbox"
       :checked="state.checked"
-      @change="({ target: { checked } }: any) => store.selectAll(checked)"
       :indeterminate.prop="state.indeterminate"
       :disabled="store.isLoading"
+      @change="({ target: { checked } }: any) => store.selectAll(checked)"
     />
   </label>
 </template>
