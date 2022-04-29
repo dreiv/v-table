@@ -66,6 +66,6 @@ onMounted(() => {
 
   Documents per page
   <select v-model.lazy.number="docsPerPageModel" :disabled="busy">
-    <option v-for="option in [50, 100, 250]">{{ option }}</option>
+    <option v-for="option in [50, 100, 250]" :key="option">{{ option }}</option>
   </select>
 </template>

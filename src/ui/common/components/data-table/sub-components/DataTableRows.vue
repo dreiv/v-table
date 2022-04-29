@@ -26,7 +26,10 @@ const context = inject(DataTableKey);
         {{ row[context?.groupBy!] }}
       </slot>
     </div>
-    <template v-for="{ key, cell, config: { width } } in context?.columns">
+    <template
+      v-for="{ key, cell, config: { width } } in context?.columns"
+      :key="key"
+    >
       <component v-if="cell" :is="cell.component" :id="row.id" />
       <data-table-overflow
         v-else
