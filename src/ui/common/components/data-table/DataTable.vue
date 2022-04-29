@@ -68,9 +68,11 @@ provide(
         </data-table-rows>
       </div>
     </div>
+
     <data-table-empty v-if="status === 'empty'">
       <slot name="custom" />
     </data-table-empty>
+
     <data-table-loader />
   </div>
 </template>

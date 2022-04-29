@@ -10,9 +10,10 @@ watch(
   () => props.width,
   () => {
     nextTick(() => {
-      hasTitle.value =
-        container.value?.scrollWidth! > container.value?.offsetWidth! ||
-        container.value?.scrollHeight! > container.value?.offsetHeight!;
+      const { scrollWidth, offsetWidth, scrollHeight, offsetHeight } =
+        container.value!;
+
+      hasTitle.value = scrollWidth > offsetWidth || scrollHeight > offsetHeight;
     });
   },
   { immediate: true }
