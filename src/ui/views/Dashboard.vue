@@ -12,21 +12,21 @@ import {
 onMounted(() => useSaveColumns());
 const store = useDataTableStore();
 
-const isGroupedModel = computed<boolean>({
-  get(): boolean {
-    return !!store.groupBy;
-  },
-  set(value: boolean): void {
-    store.groupBy = value ? "type" : "";
-  },
-});
-
-const filterModel = computed<string>({
+const filterModel = computed({
   get(): string {
     return store.filter;
   },
   set(value: string): void {
     store.filterBy(value);
+  },
+});
+
+const isGroupedModel = computed({
+  get(): boolean {
+    return !!store.groupBy;
+  },
+  set(value: boolean): void {
+    store.groupBy = value ? "type" : "";
   },
 });
 </script>

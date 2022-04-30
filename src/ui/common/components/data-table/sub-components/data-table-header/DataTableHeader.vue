@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { inject, ref } from "vue";
+import { inject, shallowRef } from "vue";
 
 import DataTableHeaderResizeHandle from "./DataTableHeaderResizeHandle.vue";
 import DataTableHeaderSort from "./DataTableHeaderSort.vue";
@@ -7,12 +7,11 @@ import DataTableOverflow from "../DataTableOverflow.vue";
 import { DataTableKey } from "../../symbols";
 
 const context = inject(DataTableKey);
+const targetColumn = shallowRef();
 const COLUMN_KEY = "column-key";
-const draggedColumn = ref();
-const targetColumn = ref();
 
 function startDrag({ dataTransfer }: DragEvent, from: string) {
-  dataTransfer?.setData(COLUMN_KEY, (draggedColumn.value = from));
+  dataTransfer?.setData(COLUMN_KEY, from);
 }
 
 function onDrop({ dataTransfer }: DragEvent, to: string, draggable?: boolean) {
@@ -37,7 +36,6 @@ function onDrop({ dataTransfer }: DragEvent, to: string, draggable?: boolean) {
       } in context?.columns"
       :key="key"
       :class="[
-        { [$style.isDragged]: key === draggedColumn },
         { [$style.isDropTarget]: draggable && key === targetColumn },
         $style.column,
         header?.class,
@@ -49,13 +47,12 @@ function onDrop({ dataTransfer }: DragEvent, to: string, draggable?: boolean) {
       <component v-if="header" :is="header.component" />
       <data-table-overflow
         v-else
-        v-memo
         :width="width"
         :title="text!"
         :class="[{ [$style.draggable]: draggable }, $style.title]"
         :draggable="draggable"
         @dragstart="startDrag($event, key)"
-        @dragend="draggedColumn = targetColumn = null"
+        @dragend="targetColumn = null"
       >
         {{ text }}
       </data-table-overflow>
@@ -101,6 +98,11 @@ function onDrop({ dataTransfer }: DragEvent, to: string, draggable?: boolean) {
 
 .draggable {
   cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+    background-color: var(--active);
+  }
 }
 
 $viewportHeight: 100vh;
@@ -112,9 +114,5 @@ $viewportHeight: 100vh;
   box-shadow: 0 $viewportHeight 0 var(--primary);
   margin-top: -$viewportHeight;
   opacity: 0.5;
-}
-
-.isDragged {
-  background-color: var(--active);
 }
 </style>
