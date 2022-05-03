@@ -35,11 +35,7 @@ function onDrop({ dataTransfer }: DragEvent, to: string, draggable?: boolean) {
         config: { width },
       } in context?.columns"
       :key="key"
-      :class="[
-        { [$style.isDropTarget]: draggable && key === targetColumn },
-        $style.column,
-        header?.class,
-      ]"
+      :class="[$style.column, header?.class]"
       @drop="onDrop($event, key, draggable)"
       @dragover.prevent="targetColumn = key"
       @dragleave="targetColumn = null"
@@ -49,7 +45,11 @@ function onDrop({ dataTransfer }: DragEvent, to: string, draggable?: boolean) {
         v-else
         :width="width"
         :title="text!"
-        :class="[{ [$style.draggable]: draggable }, $style.title]"
+        :class="[
+          { [$style.draggable]: draggable },
+          { [$style.isDropTarget]: draggable && key === targetColumn },
+          $style.title,
+        ]"
         :draggable="draggable"
         @dragstart="startDrag($event, key)"
         @dragend="targetColumn = null"
