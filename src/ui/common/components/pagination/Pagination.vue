@@ -14,17 +14,14 @@ const props = defineProps({
     type: Number,
     default: 0,
   },
-  busy: Boolean,
 });
 const emit = defineEmits<{
   (e: "goToPage", page: number, withAllIds?: boolean): void;
   (e: "update:docsPerPage", docsPerPage: number): void;
 }>();
 
-const isPrevDisabled = computed(() => props.busy || props.page === 1);
-const isNextDisabled = computed(
-  () => props.busy || props.page === props.totalPages
-);
+const isPrevDisabled = computed(() => props.page === 1);
+const isNextDisabled = computed(() => props.page === props.totalPages);
 const docsPerPageModel = computed<number>({
   get(): number {
     return props.docsPerPage;
@@ -56,7 +53,7 @@ onMounted(() => {
     prev
   </button>
   <label
-    ><input type="number" v-model.lazy="pageModel" :disabled="busy" />
+    ><input type="number" v-model.lazy="pageModel" />
     of
     {{ totalPages }}
   </label>
@@ -65,7 +62,7 @@ onMounted(() => {
   </button>
 
   Documents per page
-  <select v-model.lazy.number="docsPerPageModel" :disabled="busy">
+  <select v-model.lazy.number="docsPerPageModel">
     <option v-for="option in [50, 100, 250]" :key="option">{{ option }}</option>
   </select>
 </template>

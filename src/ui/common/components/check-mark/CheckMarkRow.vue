@@ -19,7 +19,7 @@ const checkedModel = computed({
 
 <template>
   <label :class="$style.wrapper">
-    <input type="checkbox" v-model="checkedModel" :disabled="store.isLoading" />
+    <input type="checkbox" v-model="checkedModel" />
   </label>
 </template>
 

@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ref, inject } from "vue";
+import { ref, shallowRef, inject } from "vue";
 import { requestAnimationFrame } from "@/helpers";
 import { DataTableKey } from "../../symbols";
 
 const context = inject(DataTableKey);
 const props = defineProps<{ columnKey: string; width: number }>();
 
-const handle = ref<HTMLDivElement>();
+const handle = shallowRef<HTMLDivElement>();
 const isMoving = ref(false);
 let diff = 0;
 

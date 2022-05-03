@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { nextTick, ref, watch } from "vue";
+import { nextTick, ref, shallowRef, watch } from "vue";
 
 const props = defineProps<{ width: number; title: string }>();
 
-const container = ref<HTMLDivElement>();
+const container = shallowRef<HTMLDivElement>();
 const hasTitle = ref(false);
 
 watch(
@@ -21,7 +21,11 @@ watch(
 </script>
 
 <template>
-  <div ref="container" :title="hasTitle ? props.title : undefined">
+  <div
+    ref="container"
+    v-memo="[width, hasTitle]"
+    :title="hasTitle ? props.title : undefined"
+  >
     <slot />
   </div>
 </template>

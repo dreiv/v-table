@@ -165,6 +165,5 @@ export const useDataTableStore = defineStore("dataTableStore", {
 
         return acc;
       }, {}),
-    isLoading: ({ status }) => status === "loading",
   },
 });
