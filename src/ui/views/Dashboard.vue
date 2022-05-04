@@ -29,6 +29,10 @@ const isGroupedModel = computed({
     store.groupBy = value ? "type" : "";
   },
 });
+
+const groupText = computed(
+  () => (group: any) => `${group} (${store.allGroups[group].rows.length})`
+);
 </script>
 
 <template>
@@ -54,7 +58,7 @@ const isGroupedModel = computed({
     >
       <template #group="{ group }">
         <div :class="$style.groupWrapper">
-          <check-mark-group :group="group" /> {{ group }}
+          <check-mark-group :group="group" /> {{ groupText(group) }}
         </div>
       </template>
     </data-table>
