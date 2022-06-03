@@ -84,8 +84,10 @@ function onDrop({ dataTransfer }: DragEvent, to: string, draggable?: boolean) {
   grid-column: 1 / -1;
 }
 
+$margin: 8px;
 .column {
-  margin-left: div($resizeHandleSize, 2);
+  margin-left: $margin;
+  margin-right: -$margin;
   padding-right: $resizeHandleSize;
   position: relative;
 

@@ -106,10 +106,10 @@ const groupText = computed(
 </style>
 
 <style lang="scss">
+@import "@/ui/assets/styles/abstracts";
+
 .dt-check-mark-header {
-  // reset
-  padding: initial;
-  margin: initial;
+  @include flex-center;
 
   position: sticky;
   left: 0;
