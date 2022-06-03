@@ -65,11 +65,17 @@ function startResize({ buttons }: MouseEvent) {
 
 <style lang="scss" module>
 @import "@/ui/assets/styles/abstracts";
+@import "../../variables";
 
 $viewportHeight: 100vh;
 .handle {
-  width: 16px;
+  position: absolute;
+  right: 0;
+  height: 100%;
+
+  width: $resizeHandleSize;
   background-color: var(--primary);
+  opacity: 0.3;
 
   cursor: w-resize;
   user-select: none;

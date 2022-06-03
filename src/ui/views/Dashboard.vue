@@ -107,6 +107,10 @@ const groupText = computed(
 
 <style lang="scss">
 .dt-check-mark-header {
+  // reset
+  padding: initial;
+  margin: initial;
+
   position: sticky;
   left: 0;
 

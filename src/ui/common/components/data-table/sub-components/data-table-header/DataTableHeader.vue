@@ -85,7 +85,12 @@ function onDrop({ dataTransfer }: DragEvent, to: string, draggable?: boolean) {
 }
 
 .column {
+  margin-left: div($resizeHandleSize, 2);
+  padding-right: $resizeHandleSize;
+  position: relative;
+
   display: flex;
+  align-items: center;
 }
 
 .title {
